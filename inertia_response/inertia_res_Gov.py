@@ -48,6 +48,7 @@ for iM in range(0,Nmach):
     if ((genMdl == None) or (govMdl == None)): continue       #not Gen, is WGen
     ierr, icon0 = psspy.mdlind(ibus, genId, 'GEN', 'CON')
     # psspy.plmod_status(ibus,genId,3,0)
+    # psspy.plmod_status(ibus,genId,6,0)
     # if genMdl=='GENCLS': psspy.change_plmod_con(ibus,genId,genMdl,2,0)                          
     # if (genMdl=='GENSAL')|(genMdl=='GENSAE'): psspy.change_plmod_con(ibus,genId,genMdl,5,0)   
     # if (genMdl=='GENROU')|(genMdl=='GENROE'): psspy.change_plmod_con(ibus,genId,genMdl,6,0)
