@@ -55,6 +55,7 @@ for i in buses:
     # psspy.machine_array_channel([chan_i,7,ibus],genId); chan_i=chan_i+1; # speed
 
 # power flow
+
 psspy.fnsl([0,0,0,1,1,0,99,0])
 psspy.cong(0)
 psspy.conl(0,1,1,[0,0],[0.0,0.0,0.0,0.0])
