@@ -102,13 +102,21 @@ for i in range(len(freq)) :
 # print("\nl8:")
 # print(l8)
 
-plt.plot(chandata['time'],pdroop,label='pdroop')
-plt.plot(chandata['time'],pelec,label='pelec')
+seq_01 = []
+start = 18
+for i in range(0, start):
+    seq_01 += [0]
+for i in range(start, len(pelec)):
+    seq_01 += [0.00993]
+# plt.plot(chandata['time'],pdroop,label='pdroop')
+plt.plot(chandata['time'], seq_01, label = 'Power Command' , color = "red")
+plt.plot(chandata['time'], pelec , label = 'Power Response', color = "blue")
 # plt.plot(chandata['time'],s6,label='s6')
 # plt.plot(chandata['time'],s4,label='s4')
 
 plt.legend()
 plt.xlim([0,chandata['time'][-1]])
-plt.xlabel('time')
+plt.xlabel('time(s)')
+plt.xlabel('p.u.')
 plt.savefig('9119.png')
 plt.show()
