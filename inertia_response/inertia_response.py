@@ -76,11 +76,11 @@ for iM in range(0,Nmach):
             inertia_res_t += inertia_res1
             break
         else : inertia_re2 = inertia_res1      
-plt.plot(chandata['time'],pmach,label='pmach')
+# plt.plot(chandata['time'],pmach,label='pmach')
 plt.plot(chandata['time'],pelec,label='pelec')
 plt.legend()
 plt.xlim([0,chandata['time'][-1]])
 plt.xlabel('time')
-plt.savefig('9119.png')
+# plt.savefig('9119.png')
 plt.show()
 # print(inertia_res_t)
