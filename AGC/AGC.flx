@@ -64,6 +64,7 @@ $INSERT COMON4.INS
 1     ...CONTINUE
 !     df = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
       df = df*60.0/NDM
+      VAR(L+3) = df
 
       CONDITIONAL
       .  (df.GE.0.03)
@@ -76,6 +77,7 @@ $INSERT COMON4.INS
       .  .  reg = 2
       .  ...FIN
       ...FIN
+      VAR(L+4) = reg
 
       DO 10 I = 1, NDM
       .  IBUS(I)   = ICON(M+1+2*I)

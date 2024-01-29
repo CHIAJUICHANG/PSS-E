@@ -8,8 +8,8 @@ import psspy
 import dyntools
 
 # ----------------------open file-------------------------
-casefile = os.path.join(r"C:\Users\user\Desktop\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"C:\Users\user\Desktop\AGC\P-11007-AGC.dyr")
+casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
+dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 
@@ -34,21 +34,29 @@ psspy.dyre_new([1,1,1,1],dyrfile)
 psspy.dynamics_solution_param_2([_i,_i,_i,_i,_i,_i,_i,_i],[_f,_f,step,_f,_f,_f,_f,_f])
 psspy.set_netfrq(1)
 psspy.bus_frequency_channel([1,704])
+psspy.var_channel([2,1883]) 
+psspy.var_channel([3,1884]) 
+psspy.var_channel([4,1885]) 
+psspy.var_channel([5,1886]) 
+psspy.var_channel([6,1887])
 
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
-psspy.run (0, 1, 100, 100, 0)
+psspy.run (0, 1, 1000, 1000, 0)
 psspy.dist_machine_trip(107, r"1")
-psspy.run (0, 10, 100, 100, 0)
+psspy.run (0, 20, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
 title, chanid, chandata = chnfobj.get_data()
-freq    = [60*(1+f) for f in chandata[1]]
-plt.figure (1)
-plt.plot   (chandata['time'], freq, label='freq')
-plt.legend ()
-plt.xlim   ([0,chandata['time'][-1]])
-plt.xlabel ('time')
-plt.savefig('after.png')
+# freq    = [60*(1+f) for f in chandata[1]]
+for i in range(1, 7):
+    freq    = [f for f in chandata[i]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
+    if i == 5:
+        plt.savefig('reg.png')
 plt.show   ()
