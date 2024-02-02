@@ -9,7 +9,7 @@ import dyntools
 
 # ----------------------open file-------------------------
 casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007.dyr")
+dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 

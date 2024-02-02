@@ -8,8 +8,8 @@ import psspy
 import dyntools
 
 # ----------------------open file-------------------------
-casefile = os.path.join(r"D:\github\PSS-E\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"D:\github\PSS-E\AGC\P-11007-AGC.dyr")
+casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
+dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 
@@ -67,5 +67,5 @@ plt.xlabel ('time')
 #     plt.xlabel ('time')
     # if i == 5:
     #     plt.savefig('reg.png')
-plt.savefig('after.png')
+plt.savefig('after_home.png')
 plt.show   ()
