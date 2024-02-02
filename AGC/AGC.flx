@@ -24,7 +24,7 @@ $INSERT COMON4.INS
       REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
-      REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42), R(42),    H(42)
+      REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
       CHARACTER(len=20)::   GOVNAM  
       
       AGC_status  = ICON(M)               ! AGC_status = 1
@@ -62,9 +62,10 @@ $INSERT COMON4.INS
       .  .  R(I)  = (CON(IVEL)+0.0007)    ! no get IH???
       .  ...FIN
 1     ...CONTINUE
-!     df = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
-      df = df*60.0/NDM
-      VAR(L+3) = df
+!     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
+      df      = df*60.0/NDM
+      ACE     = -10.0*BF*df
+      VAR(L)  = ACE
 
       CONDITIONAL
       .  (df.GE.0.03)
@@ -77,7 +78,6 @@ $INSERT COMON4.INS
       .  .  reg = 2
       .  ...FIN
       ...FIN
-      VAR(L+4) = reg
 
       DO 10 I = 1, NDM
       .  IBUS(I)   = ICON(M+1+2*I)
@@ -88,7 +88,7 @@ $INSERT COMON4.INS
       .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))              ! no get pmin???
       .  ...FIN
       .  ELSE                 ! up
-      .  .  CALL MACDAT(IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I),IEAAC)
+      .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 !                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
@@ -96,8 +96,7 @@ $INSERT COMON4.INS
       .  IF (TIME.LT.1) H(I) = 1.0
       .  AACt = AACt+AAC(I)
 10    ...CONTINUE
-      ACE     = -10.0*BF*df
-      VAR(L)  = ACE
+
 C
 C     MODE 8 - ASSIGN DESCRIPTIONS FOR DATA EDITOR
 C
@@ -173,7 +172,7 @@ C
       .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
-      .  .  .  IF (MOD(INT((TIME)/0.001), agcyc) .LE. INT(DELT/0.001) .AND. reg.NE.2)      
+      .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 100) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
       .  .  .  .  DO 14 I = 1, NDM
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
       .  .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt
@@ -219,7 +218,7 @@ C
       .  .  .  .  VAR(L+2) = AACt
       .  .  .  ...FIN
       .  .  .  RETURN 
-      .  .  ...FIN   
+      .  .  ...FIN
 C
 C     MODE 4 -SET NINTEG
 C
