@@ -9,7 +9,7 @@ import dyntools
 
 # ----------------------open file-------------------------
 casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
+dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 
@@ -17,7 +17,7 @@ progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 psspy.psseinit(0)
 psspy.progress_output(2,progfile)
 psspy.case(casefile)
-_i   = psspy. getdefaultint()
+_i   = psspy.getdefaultint()
 _f   = psspy.getdefaultreal()
 _s   = psspy.getdefaultchar()
 # step = 0.0008333
