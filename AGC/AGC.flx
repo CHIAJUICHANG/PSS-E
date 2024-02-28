@@ -64,7 +64,7 @@ $INSERT COMON4.INS
 1     ...CONTINUE
 !     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
       df      = df*60.0/NDM
-      ACE     = -10.0*BF*df
+      ACE     = -10.0*BF*df+100
       VAR(L)  = ACE
 
       CONDITIONAL

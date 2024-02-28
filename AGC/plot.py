@@ -9,7 +9,7 @@ import dyntools
 
 # ----------------------open file-------------------------
 casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007.dyr")
+dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 
@@ -57,15 +57,16 @@ plt.plot   (chandata['time'], freq, label='freq')
 plt.legend ()
 plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
+plt.savefig('after1.png')
 # print(chandata[5])
-# for i in range(5, 7):
-#     freq    = [f for f in chandata[i]]
-#     plt.figure (i)
-#     plt.plot   (chandata['time'], freq, label='freq')
-#     plt.legend ()
-#     plt.xlim   ([0,chandata['time'][-1]])
-#     plt.xlabel ('time')
+for i in range(2, 3):
+    freq    = [f for f in chandata[i]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
+    plt.savefig('ACE1.png')
     # if i == 5:
     #     plt.savefig('reg.png')
-plt.savefig('before.png')
 plt.show   ()
