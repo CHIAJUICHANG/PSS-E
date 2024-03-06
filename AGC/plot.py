@@ -8,8 +8,8 @@ import psspy
 import dyntools
 
 # ----------------------open file-------------------------
-casefile = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\117P-11007.sav")
-dyrfile  = os.path.join(r"C:\Users\user\Desktop\code\PSS-E\AGC\P-11007-AGC.dyr")
+casefile = os.path.join(r"D:\github\PSS-E\AGC\117P-11007.sav")
+dyrfile  = os.path.join(r"D:\github\PSS-E\AGC\P-11007-AGC8.dyr")
 outfile  = os.path.join(r"C:\Program Files\114\outfile\agc.out")
 progfile = os.path.join(r"C:\Program Files\114\txtfile\agc.txt")
 
@@ -46,7 +46,7 @@ psspy.var_channel([6,1887])     # L+4
 psspy.strt(0,outfile)
 psspy.run (0,  1, 100000, 100, 0)
 psspy.dist_machine_trip(107, r"1")
-psspy.run (0, 13, 100000, 100, 0)
+psspy.run (0, 30, 100000, 100, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
@@ -57,7 +57,7 @@ plt.plot   (chandata['time'], freq, label='freq')
 plt.legend ()
 plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
-plt.savefig('after1.png')
+plt.savefig('after1590.png')
 # print(chandata[5])
 for i in range(2, 3):
     freq    = [f for f in chandata[i]]
@@ -66,7 +66,7 @@ for i in range(2, 3):
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
-    plt.savefig('ACE1.png')
+    plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
 plt.show   ()
