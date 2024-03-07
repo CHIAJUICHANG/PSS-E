@@ -9,7 +9,7 @@ def main(path, stt, end):
     list_reg = []
     all = []
     path_found = []
-    for i in range(0,10):                   #len(path)
+    for i in range(0,8):                   #len(path)
         all += list1
         for j in range(0,len(list1)):
             for k in range(0,len(path[list1[j][len(list1[j])-1]])):

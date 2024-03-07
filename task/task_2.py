@@ -30,10 +30,10 @@ busnum        = busnum[0]
 
 root = Tk()
 root.update()
-stt = askinteger("Input", "Enter Starting Bus no.", initialvalue=107)
-end = askinteger("Input", "Enter Ending Bus no.", initialvalue=1090)
+stt = askinteger("Input", "Enter Starting Bus no.", initialvalue=531)
+end = askinteger("Input", "Enter Ending Bus no.", initialvalue=704)
 lev = askinteger(
-    "Input", "Enter voltage level in KV's you want to omit", initialvalue=1)
+    "Input", "Enter voltage level in KV's you want to omit", initialvalue=0)
 sys.stdout = open(task2, 'w')
 
 #output path
@@ -91,9 +91,10 @@ else :
     print('**********************************************************************\n')
     print('Following paths exist between start and end bus after omitting buses of level : '+ str(lev) + " KV\n")
     print('**********************************************************************\n')
-    for w in range(0,len(ab)):
-        for l in range(0,len(ab[w])):
-            if ab[w][l]
+    for w in range(0, len(ab)):
+        # for l in range(0, len(ab[w])-1):
+        #     for m in range(0, len(iarray_from)):
+        #         if iarray_from[m] == ab[w][l] and iarray_to[m] == ab[w][l]
         print("path " + str(w+1) + " : " + str(ab[w]))
 
 sys.stdout.close()
