@@ -35,6 +35,7 @@ $INSERT COMON4.INS
       Ki          = CON(J+2)
       Kd          = CON(J+3)
       Td          = CON(J+4)
+      POI         = CON(J+5+NDM*2)        ! fault start point
       AACt        = 0.0                   ! ramp rate
       reg         = 2                     ! 2 nothing 1 regulation up 0 down
       df          = 0.0
@@ -74,10 +75,10 @@ $INSERT COMON4.INS
       VAR(L)  = ACE
 
       CONDITIONAL
-      .  (df.GE.0.03)
+      .  (df.GE.0.025)
       .  .  reg = 0       ! regulation down
       .  ...FIN
-      .  (df.LE.-0.03)
+      .  (df.LE.-0.025)
       .  .  reg = 1       ! regulation up
       .  ...FIN
       .  (OTHERWISE)
