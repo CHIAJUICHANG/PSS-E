@@ -37,10 +37,10 @@ psspy.set_netfrq(1)
 psspy.bus_frequency_channel([1,704])
 psspy.var_channel([2,1883]) 
 psspy.var_channel([3,1884]) 
-psspy.var_channel([4,1885]) 
-psspy.var_channel([5,1886])     # L+3 
-psspy.var_channel([6,1887])     # L+4
-# psspy.var_channel([7,1888])     # L+5
+psspy.var_channel([4,1885])
+NDM = 8
+for i in range(0, NDM*2):
+    psspy.var_channel([5+i,1886+i])     # L+3 
 
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
@@ -57,16 +57,16 @@ plt.plot   (chandata['time'], freq, label='freq')
 plt.legend ()
 plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
-plt.savefig('after1590.png')
+# plt.savefig('after1590.png')
 # print(chandata[5])
-for i in range(2, 3):
+for i in range(2, 23):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='freq')
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
-    plt.savefig('ACE1590.png')
+    # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
 plt.show   ()

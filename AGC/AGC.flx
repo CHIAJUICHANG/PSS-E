@@ -75,10 +75,10 @@ $INSERT COMON4.INS
       VAR(L)  = ACE
 
       CONDITIONAL
-      .  (df.GE.0.025)
+      .  (df.GE.0.001)
       .  .  reg = 0       ! regulation down
       .  ...FIN
-      .  (df.LE.-0.025)
+      .  (df.LE.-0.001)
       .  .  reg = 1       ! regulation up
       .  ...FIN
       .  (OTHERWISE)
@@ -91,17 +91,23 @@ $INSERT COMON4.INS
       .  ID(I)     = ICON(M+2+2*I)+48
       .  P(I)      = PMECH(IM(I))*MBASE(IM(I))
 !     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
-      .  WHEN (reg.EQ.0)      ! down
+      .  IF (reg.EQ.0)      ! down
       .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))              ! no get pmin???
       .  ...FIN
-      .  ELSE                 ! up
+      .  IF (reg.EQ.1)      ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 !                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
+      .  IF (reg.EQ.2)      
+      .  .  AAC(I) = 0
+      .  ...FIN
+      .  IF (AAC(I).LT.0) AAC(I) = 0
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
-      .  AACt = AACt+AAC(I)
+      .  VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
+      .  VAR(L+2+2*I)        = Pmax(I)-P(I)
+      .  AACt                = AACt+AAC(I)
 10    ...CONTINUE
 
 C
@@ -221,8 +227,11 @@ C
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)  = VAR(IH(I)+1)
+
 14    .  .  .  .  ...CONTINUE
-      .  .  .  .  VAR(L+2) = AACt
+      .  .  .  .  VAR(L+2)  = AACt
+      .  .  .  .  VAR(L+19) = tmp
+      .  .  .  .  VAR(L+20) = Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN
@@ -261,7 +270,7 @@ C     DATA TABULATION CODE
 C
 31    JJ = J+7
       KK = K+1
-      WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+NDM   ! IPRT unit number
+      WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM+2   ! IPRT unit number
       WRITE(IPRT, 101) ICON(M), ICON(M+1), ICON(M+2)
       WRITE(IPRT, 103)
       DO 15 II = 1, NDM
