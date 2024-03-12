@@ -99,6 +99,7 @@ $INSERT COMON4.INS
       .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 !                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
+C     122
       .  IF (reg.EQ.2)      
       .  .  AAC(I) = 0
       .  ...FIN
