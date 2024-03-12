@@ -294,7 +294,7 @@ C
 C
 C     MODE 6 - ACTIVITY DYDA
 C
-21    WRITE(IPRT, 117) 0, 0, 8, 0, 2*NDM+3, 5+NDM, 2, 3+NDM, ICON(M), ICON(M+1), ICON(M+2)
+21    WRITE(IPRT, 117) 0, 0, 8, 0, 2*NDM+3, 5+NDM, 2, 3+2*NDM, ICON(M), ICON(M+1), ICON(M+2)
       DO 18 II = 0, NDM/10,1
       .  NUM   = NDM*2-II*20
       .  IF (NUM .GE. 20) NUM = 20
