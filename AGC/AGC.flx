@@ -102,7 +102,6 @@ $INSERT COMON4.INS
       .  IF (reg.EQ.2)      
       .  .  AAC(I) = 0
       .  ...FIN
-!     .  IF (AAC(I).LT.0) AAC(I) = 0
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
       .  VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
