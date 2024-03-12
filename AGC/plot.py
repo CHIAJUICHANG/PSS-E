@@ -66,16 +66,17 @@ for i in range(0, len(chandata['time'])):
 avg = avg/steady_s
 avg_arr = [avg for i in range(0, len(chandata['time']))]
 plt.plot   (chandata['time'], avg_arr, label='avg_freq')
+print(avg_arr[0])
 
 # plt.savefig('after1590.png')
 # print(chandata[5])
-# for i in range(2, 4):
-#     freq    = [f for f in chandata[i]]
-#     plt.figure (i)
-#     plt.plot   (chandata['time'], freq, label='freq')
-#     plt.legend ()
-#     plt.xlim   ([0,chandata['time'][-1]])
-#     plt.xlabel ('time')
+for i in range(4, 5):
+    freq    = [f for f in chandata[i]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
@@ -84,8 +85,8 @@ for i in range(5, NDM+5):
     freq2    = [f for f in chandata[3*(i-4)+3]]
     freq3    = [f for f in chandata[3*(i-4)+4]]
     plt.figure (i)
-    plt.plot   (chandata['time'], freq1, label='Pregsys(I)')
-    plt.plot   (chandata['time'], freq2, label='P(I)')
+    # plt.plot   (chandata['time'], freq1, label='P(I)')
+    plt.plot   (chandata['time'], freq2, label='Pregsys(I)')
     plt.plot   (chandata['time'], freq3, label='AAC(I)')
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
