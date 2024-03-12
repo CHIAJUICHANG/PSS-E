@@ -24,7 +24,6 @@
       IBUS(I)  = ICON(M+1+2*I)
       ID(I)    = ICON(M+2+2*I)+48
       CALL GENCHK(IBUS(I),    CHAR(ID(I)),    IM(I), 'GENCHK cannot find the specified machine')
-
       CALL MACINT(IBUS(I),    CHAR(ID(I)), 'STATUS',  ST(I), IERR)
       IB(I)    = ABS(NUMTRM(IM(I)))
       df       = df+BSFREQ(IB(I))
@@ -46,7 +45,6 @@
       CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
 32756 CONTINUE
 1     CONTINUE
-
       df      = df*60.0/NDM
       ACE     = -10.0*BF*df
       VAR(L)  = ACE
@@ -61,17 +59,14 @@
       IBUS(I)   = ICON(M+1+2*I)
       ID(I)     = ICON(M+2+2*I)+48
       P(I)      = PMECH(IM(I))*MBASE(IM(I))
-
       IF(.NOT.(reg.EQ.0)) GO TO 32752
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))
 32752 IF(.NOT.(reg.EQ.1)) GO TO 32751
       CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))
-
 32751 IF(.NOT.(reg.EQ.2)) GO TO 32750
       AAC(I) = 0
-32750 IF (AAC(I).LT.0) AAC(I) = 0
-      IF (IM(I).EQ.0) RETURN
+32750 IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
       VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
       VAR(L+2+2*I)        = Pmax(I)-P(I)
@@ -134,7 +129,6 @@
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
      1O TO 32734
       IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
-
       IF(.NOT.(R(I).GT.0.0)) GO TO 32733
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
@@ -167,8 +161,6 @@
 32730 H(I)  = VAR(IH(I)+1)
 14    CONTINUE
       VAR(L+2)  = AACt
-
-
 32736 RETURN
       GO TO 32740
 32737 IF(.NOT.(MODE.EQ.4)) GO TO 32725

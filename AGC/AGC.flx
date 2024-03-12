@@ -44,7 +44,7 @@ $INSERT COMON4.INS
       .  IBUS(I)  = ICON(M+1+2*I)
       .  ID(I)    = ICON(M+2+2*I)+48      ! 48 is ascii '0'
       .  CALL GENCHK(IBUS(I),    CHAR(ID(I)),    IM(I), 'GENCHK cannot find the specified machine')
-!                                         ! IM(I) = machine  index
+C                                         ! IM(I) = machine  index
       .  CALL MACINT(IBUS(I),    CHAR(ID(I)), 'STATUS',  ST(I), IERR)
       .  IB(I)    = ABS(NUMTRM(IM(I)))    ! IB(I) = dyrnamic index    
       .  df       = df+BSFREQ(IB(I))      
@@ -69,7 +69,7 @@ $INSERT COMON4.INS
       .  .  CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
       .  ...FIN
 1     ...CONTINUE
-!     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
+C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average frequency deviation 
       df      = df*60.0/NDM
       ACE     = -10.0*BF*df
       VAR(L)  = ACE
@@ -90,14 +90,14 @@ $INSERT COMON4.INS
       .  IBUS(I)   = ICON(M+1+2*I)
       .  ID(I)     = ICON(M+2+2*I)+48
       .  P(I)      = PMECH(IM(I))*MBASE(IM(I))
-!     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
+C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
       .  IF (reg.EQ.0)      ! down
       .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))              ! no get pmin???
       .  ...FIN
       .  IF (reg.EQ.1)      ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
-!                        CON(J+I+4) = ramp rate of generator I
+C                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
       .  IF (reg.EQ.2)      
       .  .  AAC(I) = 0
@@ -191,7 +191,7 @@ C
       .  .  .  .  .  .  mul     = 1
       .  .  .  .  .  .  IF (reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))  ! up, Pmech < Pmax 
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
-!                                                                                   ! GREF is p.u.
+C                                                                                   ! GREF is p.u.
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)                                         ! VAR(IH(I)+1) = h, mul = (h^3/2)/1.2???
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
@@ -229,8 +229,8 @@ C
 
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-!     .  .  .  .  VAR(L+19) = tmp
-!     .  .  .  .  VAR(L+20) = Pregsys
+C     .  .  .  .  VAR(L+19) = tmp
+C     .  .  .  .  VAR(L+20) = Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN
