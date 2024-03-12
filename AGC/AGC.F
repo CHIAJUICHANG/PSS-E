@@ -59,12 +59,12 @@
       IBUS(I)   = ICON(M+1+2*I)
       ID(I)     = ICON(M+2+2*I)+48
       P(I)      = PMECH(IM(I))*MBASE(IM(I))
-      IF(.NOT.(reg.EQ.0)) GO TO 32751
+      IF(.NOT.(reg.EQ.0)) GO TO 32752
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))
-      GO TO 32752
-32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
+32752 IF(.NOT.(reg.EQ.1)) GO TO 32751
+      CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))
-32752 IF(.NOT.(reg.EQ.2)) GO TO 32750
+32751 IF(.NOT.(reg.EQ.2)) GO TO 32750
       AAC(I) = 0
 32750 IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
