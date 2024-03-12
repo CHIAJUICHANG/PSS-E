@@ -230,8 +230,8 @@ C
 
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-      .  .  .  .  VAR(L+19) = tmp
-      .  .  .  .  VAR(L+20) = Pregsys
+!     .  .  .  .  VAR(L+19) = tmp
+!     .  .  .  .  VAR(L+20) = Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN

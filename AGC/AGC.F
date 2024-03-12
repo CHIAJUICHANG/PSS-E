@@ -167,8 +167,8 @@
 32730 H(I)  = VAR(IH(I)+1)
 14    CONTINUE
       VAR(L+2)  = AACt
-      VAR(L+19) = tmp
-      VAR(L+20) = Pregsys
+
+
 32736 RETURN
       GO TO 32740
 32737 IF(.NOT.(MODE.EQ.4)) GO TO 32725
