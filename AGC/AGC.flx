@@ -102,8 +102,7 @@ C                        CON(J+I+4) = ramp rate of generator I
       .  IF (AAC(I).LT.0) AAC(I) = 0
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
-      .  VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
-      .  VAR(L+2+2*I)        = Pmax(I)-P(I)
+      .  VAR(L+2+3*I-1)      = P(I)
       .  AACt                = AACt+AAC(I)
 10    ...CONTINUE
 
@@ -223,12 +222,13 @@ C                                                                               
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
-      .  .  .  .  .  H(I)  = VAR(IH(I)+1)
-
+      .  .  .  .  .  H(I)           = VAR (IH(I)+1)
+      .  .  .  .  .  VAR(L+2+3*I-2) = Preg(I)
+      .  .  .  .  .  VAR(L+2+3*I)   = AAC (I)      
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-C     .  .  .  .  VAR(L+19) = tmp
-C     .  .  .  .  VAR(L+20) = Pregsys
+C     .  .  .  .  VAR(L+27) = tmp
+C     .  .  .  .  VAR(L+28) = Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN

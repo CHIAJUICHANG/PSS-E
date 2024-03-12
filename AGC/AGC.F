@@ -67,8 +67,7 @@
 32752 IF (AAC(I).LT.0) AAC(I) = 0
       IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
-      VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
-      VAR(L+2+2*I)        = Pmax(I)-P(I)
+      VAR(L+2+3*I-1)      = P(I)
       AACt                = AACt+AAC(I)
 10    CONTINUE
       IF(.NOT.(MODE.EQ.8)) GO TO 32750
@@ -157,7 +156,9 @@
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
 32728 CONTINUE
-32731 H(I)  = VAR(IH(I)+1)
+32731 H(I)           = VAR (IH(I)+1)
+      VAR(L+2+3*I-2) = Preg(I)
+      VAR(L+2+3*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
 32737 RETURN
