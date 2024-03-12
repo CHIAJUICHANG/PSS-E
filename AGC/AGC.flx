@@ -91,16 +91,13 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       .  ID(I)     = ICON(M+2+2*I)+48
       .  P(I)      = PMECH(IM(I))*MBASE(IM(I))
 C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
-      .  IF (reg.EQ.0)      ! down
+      .  WHEN (reg.EQ.0)      ! down
       .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60000.0, -P(I))              ! no get pmin???
       .  ...FIN
-      .  IF (reg.EQ.1)       ! up
+      .  ELSE                 ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 C                        CON(J+I+4) = ramp rate of generator I
-      .  ...FIN
-      .  IF (reg.EQ.2)      
-      .  .  AAC(I) = 0
       .  ...FIN
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
