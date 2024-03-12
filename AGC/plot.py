@@ -59,7 +59,7 @@ plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
 # plt.savefig('after1590.png')
 # print(chandata[5])
-for i in range(2, 23):
+for i in range(2, 21):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='freq')
