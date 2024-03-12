@@ -80,9 +80,9 @@ plt.plot   (chandata['time'], avg_arr, label='avg_freq')
     # if i == 5:
     #     plt.savefig('reg.png')
 for i in range(5, NDM+5):
-    freq1    = [f for f in chandata[3*(i-4)+1]]
-    freq2    = [f for f in chandata[3*(i-4)+2]]
-    freq3    = [f for f in chandata[3*(i-4)+3]]
+    freq1    = [f for f in chandata[3*(i-4)+2]]
+    freq2    = [f for f in chandata[3*(i-4)+3]]
+    freq3    = [f for f in chandata[3*(i-4)+4]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq1, label='Pregsys(I)')
     plt.plot   (chandata['time'], freq2, label='P(I)')
