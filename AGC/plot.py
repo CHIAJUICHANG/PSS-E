@@ -39,7 +39,7 @@ psspy.var_channel([2,1883])
 psspy.var_channel([3,1884]) 
 psspy.var_channel([4,1885])
 NDM = 8
-for i in range(0, NDM*2):
+for i in range(0, NDM*3+2):
     psspy.var_channel([5+i,1886+i])     # L+3 
 
 # ----------------------run dyrnamic simulation-------------------------
@@ -59,7 +59,29 @@ plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
 # plt.savefig('after1590.png')
 # print(chandata[5])
-for i in range(2, 21):
+for i in range(2, 4):
+    freq    = [f for f in chandata[i]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
+    # plt.savefig('ACE1590.png')
+    # if i == 5:
+    #     plt.savefig('reg.png')
+for i in range(0, NDM):
+    freq1    = [f for f in chandata[3*(i+1)+1]]
+    freq2    = [f for f in chandata[3*(i+1)+2]]
+    freq3    = [f for f in chandata[3*(i+1)+3]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
+    # plt.savefig('ACE1590.png')
+    # if i == 5:
+    #     plt.savefig('reg.png')
+for i in range(28, 30):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='freq')
