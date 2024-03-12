@@ -48,10 +48,10 @@
       df      = df*60.0/NDM
       ACE     = -10.0*BF*df
       VAR(L)  = ACE
-      IF(.NOT.(df.GE.0.001)) GO TO 32754
+      IF(.NOT.(df.GE.0.01)) GO TO 32754
       reg = 0
       GO TO 32755
-32754 IF(.NOT.(df.LE.-0.001)) GO TO 32753
+32754 IF(.NOT.(df.LE.-0.01)) GO TO 32753
       reg = 1
       GO TO 32755
 32753 reg = 2

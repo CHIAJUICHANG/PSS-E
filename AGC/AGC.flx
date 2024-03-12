@@ -75,10 +75,10 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       VAR(L)  = ACE
 
       CONDITIONAL
-      .  (df.GE.0.001)
+      .  (df.GE.0.01)
       .  .  reg = 0       ! regulation down
       .  ...FIN
-      .  (df.LE.-0.001)
+      .  (df.LE.-0.01)
       .  .  reg = 1       ! regulation up
       .  ...FIN
       .  (OTHERWISE)
