@@ -187,7 +187,7 @@
 32722 IF(.NOT.(NEW)) RETURN
 31    JJ = J+7
       KK = K+1
-      WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM+2
+      WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM
       WRITE(IPRT, 101) ICON(M), ICON(M+1), ICON(M+2)
       WRITE(IPRT, 103)
       DO 15 II = 1, NDM
