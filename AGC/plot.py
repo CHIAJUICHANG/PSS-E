@@ -52,29 +52,41 @@ psspy.run (0, 30, 100000, 100, 0)
 chnfobj = dyntools.CHNF(outfile)
 title, chanid, chandata = chnfobj.get_data()
 freq    = [60*(1+f) for f in chandata[1]]
+avg = 0
+steady_s = 0
 plt.figure (1)
 plt.plot   (chandata['time'], freq, label='freq')
 plt.legend ()
 plt.xlim   ([0,chandata['time'][-1]])
 plt.xlabel ('time')
+for i in range(0, len(chandata['time'])):
+    if chandata['time'][i] > 20: 
+        avg      += freq[i]
+        steady_s += 1 
+avg = avg/steady_s
+avg_arr = [avg for i in range(0, len(chandata['time']))]
+plt.plot   (chandata['time'], avg_arr, label='avg_freq')
+
 # plt.savefig('after1590.png')
 # print(chandata[5])
-for i in range(2, 4):
-    freq    = [f for f in chandata[i]]
-    plt.figure (i)
-    plt.plot   (chandata['time'], freq, label='freq')
-    plt.legend ()
-    plt.xlim   ([0,chandata['time'][-1]])
-    plt.xlabel ('time')
+# for i in range(2, 4):
+#     freq    = [f for f in chandata[i]]
+#     plt.figure (i)
+#     plt.plot   (chandata['time'], freq, label='freq')
+#     plt.legend ()
+#     plt.xlim   ([0,chandata['time'][-1]])
+#     plt.xlabel ('time')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
-for i in range(0, NDM):
-    freq1    = [f for f in chandata[3*(i+1)+1]]
-    freq2    = [f for f in chandata[3*(i+1)+2]]
-    freq3    = [f for f in chandata[3*(i+1)+3]]
+for i in range(5, NDM+5):
+    freq1    = [f for f in chandata[3*(i-4)+1]]
+    freq2    = [f for f in chandata[3*(i-4)+2]]
+    freq3    = [f for f in chandata[3*(i-4)+3]]
     plt.figure (i)
-    plt.plot   (chandata['time'], freq, label='freq')
+    plt.plot   (chandata['time'], freq1, label='Pregsys(I)')
+    plt.plot   (chandata['time'], freq2, label='P(I)')
+    plt.plot   (chandata['time'], freq3, label='AAC(I)')
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
