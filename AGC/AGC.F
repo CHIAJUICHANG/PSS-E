@@ -64,7 +64,8 @@
       GO TO 32752
 32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
       AAC(I) = MIN(CON(J+I+4)*agcyc/60000.0, Pmax(I)-P(I))
-32752 IF (IM(I).EQ.0) RETURN
+32752 IF (AAC(I).LT.0) AAC(I) = 0
+      IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
       VAR(L+2+2*I-1)      = CON(J+I+4)*agcyc/60000.0
       VAR(L+2+2*I)        = Pmax(I)-P(I)
