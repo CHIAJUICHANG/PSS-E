@@ -94,7 +94,18 @@ for i in range(5, NDM+5):
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
-for i in range(28, 30):
+    # if i == 5:
+    #     AACT = freq3
+    # else:
+    #     for j in range(0, len(freq3)):
+    #         AACT[j] += freq3[j]
+    # if  i == NDM+5-1:
+    #     plt.figure (i+1)
+    #     plt.plot   (chandata['time'], AACT, label='AACT(I)')
+    #     plt.legend ()
+    #     plt.xlim   ([0,chandata['time'][-1]])
+    #     plt.xlabel ('time')
+for i in range(29, 31):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='freq')

@@ -160,9 +160,11 @@ C
       ELSE
       .  CONDITIONAL
       .  .  (MODE.EQ.1)
-      .  .  .  VOUT   = 0.0
+C     .  .  .  VOUT   = 0.0
+C     .  .  .  VINP   = PID_MODE1(Kp,Ki,Kd,Td,VOUT,K,K+1,IEAAC) 
+C     .  .  .  VAR(L) = VINP        ! PID input is ACE
+      .  .  .  VOUT   = VAR(L+1)
       .  .  .  VINP   = PID_MODE1(Kp,Ki,Kd,Td,VOUT,K,K+1,IEAAC) 
-      .  .  .  VAR(L) = VINP        ! PID input is ACE
       .  .  ...FIN               
 C
 C     MODE 2 - CALCULATE DERIVATIVES
@@ -170,15 +172,15 @@ C
       .  .  (MODE.EQ.2)
       .  .  .  VINP     = VAR(L)
       .  .  .  VOUT     = PID_MODE2(Kp, Ki, Kd, Td, VINP, K, K+1)
-      .  .  .  VAR(L+1) = VOUT
+C     .  .  .  VAR(L+1) = VOUT
       .  .  ...FIN       
 C
 C     MODE 3 - SET EFD
 C
       .  .  (MODE.EQ.3)
-      .  .  .  VINP    = VAR(L+1)
+      .  .  .  VINP    = VAR(L)
       .  .  .  VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
-      .  .  .  VAR(L)  = VOUT
+C     .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
       .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 100) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
@@ -227,8 +229,9 @@ C                                                                               
       .  .  .  .  .  VAR(L+2+3*I)   = AAC (I)      
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-C     .  .  .  .  VAR(L+27) = tmp
-C     .  .  .  .  VAR(L+28) = Pregsys
+      .  .  .  .  VAR(L+27) = tmp
+      .  .  .  .  VAR(L+28) = Pregsys
+      .  .  .  .  PRINT *,Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN
