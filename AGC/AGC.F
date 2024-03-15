@@ -102,19 +102,16 @@
 32747 RETURN
       GO TO 32749
 32748 IF(.NOT.(MODE.EQ.1)) GO TO 32740
-      VOUT   = 0.0
+      VOUT   = VAR(L+1)
       VINP   = PID_MODE1(Kp,Ki,Kd,Td,VOUT,K,K+1,IEAAC)
-      VAR(L) = VINP
       GO TO 32741
 32740 IF(.NOT.(MODE.EQ.2)) GO TO 32739
       VINP     = VAR(L)
       VOUT     = PID_MODE2(Kp, Ki, Kd, Td, VINP, K, K+1)
-      VAR(L+1) = VOUT
       GO TO 32741
 32739 IF(.NOT.(MODE.EQ.3)) GO TO 32738
-      VINP    = VAR(L+1)
+      VINP    = VAR(L)
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
-      VAR(L)  = VOUT
       Pregsys = VOUT
       tmp     = 0
       IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 100) .AND. (reg.NE.2)
@@ -161,6 +158,9 @@
       VAR(L+2+3*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
+      VAR(L+27) = tmp
+      VAR(L+28) = Pregsys
+      PRINT *,Pregsys
 32737 RETURN
       GO TO 32741
 32738 IF(.NOT.(MODE.EQ.4)) GO TO 32726
