@@ -154,12 +154,11 @@
 32727 tmp = tmp+AAC(I)
 32728 CONTINUE
 32731 H(I)           = VAR (IH(I)+1)
-      VAR(L+2+3*I-1) = Preg(I)
+      VAR(L+2+3*I-1) = GREF(IM(I))
       VAR(L+2+3*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
-      VAR(L+27) = tmp
-      VAR(L+28) = Pregsys
+      VAR(L+27) = Pregsys
       PRINT *,Pregsys
 32737 RETURN
       GO TO 32741
