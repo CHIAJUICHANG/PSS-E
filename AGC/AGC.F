@@ -116,6 +116,7 @@
       tmp     = 0
       IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2
      1))) GO TO 32737
+      PRINT *,TIME
       DO 14 I = 1, NDM
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
      1 GO TO 32736
