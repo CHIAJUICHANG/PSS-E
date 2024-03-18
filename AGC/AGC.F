@@ -114,8 +114,8 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 100) .AND. (reg.NE.2)
-     1)) GO TO 32737
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2
+     1))) GO TO 32737
       DO 14 I = 1, NDM
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
      1 GO TO 32736
