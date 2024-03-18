@@ -85,7 +85,6 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       .  .  reg = 2
       .  ...FIN
       ...FIN
-      PRINT *,df
 
       DO 10 I = 1, NDM
       .  IBUS(I)   = ICON(M+1+2*I)
@@ -184,6 +183,8 @@ C
 C     .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
+      .  .  .  PRINT *,df
+      .  .  .  PRINT *,reg
       .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 100) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
       .  .  .  .  DO 14 I = 1, NDM
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
