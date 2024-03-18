@@ -55,7 +55,8 @@
       reg = 1
       GO TO 32755
 32753 reg = 2
-32755 DO 10 I = 1, NDM
+32755 PRINT *,df
+      DO 10 I = 1, NDM
       IBUS(I)   = ICON(M+1+2*I)
       ID(I)     = ICON(M+2+2*I)+48
       P(I)      = PMECH(IM(I))*MBASE(IM(I))

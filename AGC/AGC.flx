@@ -75,7 +75,7 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       VAR(L)  = ACE
 
       CONDITIONAL
-      .  (df.GE.0.01)
+      .  (df.GE.0.01) 
       .  .  reg = 0       ! regulation down
       .  ...FIN
       .  (df.LE.-0.01)
@@ -85,6 +85,7 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       .  .  reg = 2
       .  ...FIN
       ...FIN
+      PRINT *,df
 
       DO 10 I = 1, NDM
       .  IBUS(I)   = ICON(M+1+2*I)
