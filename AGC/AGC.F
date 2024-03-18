@@ -128,6 +128,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32734 tmp = tmp+MIN(Preg(I), AAC(I))
+      PRINT *,"state 1"
 32735 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12733
       IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
@@ -135,7 +136,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32732 tmp = tmp+MAX(Preg(I), AAC(I))
-32733 CONTINUE
+32733 PRINT *,"state 2"
 32736 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
      1 GO TO 32731
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
@@ -145,6 +146,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32729 tmp = tmp+AAC(I)
+      PRINT *,"state 3"
 32730 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12728
       IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
@@ -152,7 +154,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
-32728 CONTINUE
+32728 PRINT *,"state 4"
 32731 H(I)           = VAR (IH(I)+1)
       VAR(L+2+3*I-1) = GREF(IM(I))
       VAR(L+2+3*I)   = AAC (I)

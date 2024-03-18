@@ -196,6 +196,7 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                   ! MIN(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MIN(Preg(I), AAC(I))                           ! total P command
+      .  .  .  .  .  .  .  PRINT *,"state 1"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
@@ -205,6 +206,7 @@ C                                                                               
       .  .  .  .  .  .  ...FIN                                                      ! MAX(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MAX(Preg(I), AAC(I))
       .  .  .  .  .  .  ...FIN
+      .  .  .  .  .  .  .  PRINT *,"state 2"
       .  .  .  .  .  ...FIN
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt)))   ! total AAC < system P regulation
       .  .  .  .  .  .  IF (reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))  ! up, Pmech < Pmax
@@ -214,6 +216,7 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
+      .  .  .  .  .  .  .  PRINT *,"state 3"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
@@ -223,6 +226,7 @@ C                                                                               
       .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
       .  .  .  .  .  .  ...FIN
+      .  .  .  .  .  .  .  PRINT *,"state 4"
       .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
       .  .  .  .  .  VAR(L+2+3*I-1) = GREF(IM(I))
