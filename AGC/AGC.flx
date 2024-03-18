@@ -214,7 +214,7 @@ C                                                                               
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
-      .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
+      .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
       .  .  .  .  .  .  .  PRINT *,reg
       .  .  .  .  .  .  .  PRINT *,"state 3"
@@ -224,7 +224,7 @@ C                                                                               
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)                 
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
-      .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
+      .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  .  PRINT *,reg     
