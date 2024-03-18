@@ -229,8 +229,8 @@ C                                                                               
       .  .  .  .  .  VAR(L+2+3*I)   = AAC (I)      
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-      .  .  .  .  VAR(L+27) = tmp
-      .  .  .  .  VAR(L+28) = Pregsys
+      .  .  .  .  VAR(L+27) = Pregsys
+      .  .  .  .  VAR(L+28) = GREF
       .  .  .  .  PRINT *,Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
