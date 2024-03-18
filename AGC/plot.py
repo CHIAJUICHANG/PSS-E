@@ -44,9 +44,9 @@ for i in range(0, NDM*3+2):
 
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
-psspy.run (0,  1, 1000, 100, 0)
+psspy.run (0,  1, 1000, 1000, 0)
 psspy.dist_machine_trip(107, r"1")
-psspy.run (0, 30, 1000, 100, 0)
+psspy.run (0, 30, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
