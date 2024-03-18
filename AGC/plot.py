@@ -68,7 +68,7 @@ avg_arr = [avg for i in range(0, len(chandata['time']))]
 plt.plot   (chandata['time'], avg_arr, label=str(avg_arr[0]))
 print(avg_arr[0])
 
-plt.savefig('after1.png')
+# plt.savefig('after1.png')
 # print(chandata[5])
 # for i in range(4, 5):
 #     freq    = [f for f in chandata[i]]
@@ -80,31 +80,31 @@ plt.savefig('after1.png')
 #     # plt.savefig('ACE1590.png')
 #     # if i == 5:
 #     #     plt.savefig('reg.png')
-# for i in range(5, NDM+5):
-#     freq1    = [f for f in chandata[3*(i-4)+2]]
-#     freq2    = [f for f in chandata[3*(i-4)+3]]
-#     freq3    = [f for f in chandata[3*(i-4)+4]]
-#     plt.figure (i)
-#     # plt.plot   (chandata['time'], freq1, label='P(I)')
-#     plt.plot   (chandata['time'], freq2, label='Pregsys(I)')
-#     plt.plot   (chandata['time'], freq3, label='AAC(I)')
-#     plt.legend ()
-#     plt.xlim   ([0,chandata['time'][-1]])
-#     plt.xlabel ('time')
-#     # plt.savefig('ACE1590.png')
-#     # if i == 5:
-#     #     plt.savefig('reg.png')
-#     # if i == 5:
-#     #     AACT = freq3
-#     # else:
-#     #     for j in range(0, len(freq3)):
-#     #         AACT[j] += freq3[j]
-#     # if  i == NDM+5-1:
-#     #     plt.figure (i+1)
-#     #     plt.plot   (chandata['time'], AACT, label='AACT(I)')
-#     #     plt.legend ()
-#     #     plt.xlim   ([0,chandata['time'][-1]])
-#     #     plt.xlabel ('time')
+for i in range(5, NDM+5):
+    freq1    = [f for f in chandata[3*(i-4)+2]]
+    freq2    = [f for f in chandata[3*(i-4)+3]]
+    freq3    = [f for f in chandata[3*(i-4)+4]]
+    plt.figure (i)
+    # plt.plot   (chandata['time'], freq1, label='P(I)')
+    plt.plot   (chandata['time'], freq2, label='Pregsys(I)')
+    plt.plot   (chandata['time'], freq3, label='AAC(I)')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
+    # plt.savefig('ACE1590.png')
+    # if i == 5:
+    #     plt.savefig('reg.png')
+    # if i == 5:
+    #     AACT = freq3
+    # else:
+    #     for j in range(0, len(freq3)):
+    #         AACT[j] += freq3[j]
+    # if  i == NDM+5-1:
+    #     plt.figure (i+1)
+    #     plt.plot   (chandata['time'], AACT, label='AACT(I)')
+    #     plt.legend ()
+    #     plt.xlim   ([0,chandata['time'][-1]])
+    #     plt.xlabel ('time')
 for i in range(29, 31):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
