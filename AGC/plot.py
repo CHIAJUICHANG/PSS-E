@@ -47,8 +47,10 @@ for i in range(0, NDM*4+2):
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
 psspy.run (0,  1, 1000, 1000, 0)
-psspy.dist_machine_trip(107, r"1")
-psspy.run (0, 37, 1000, 1000, 0)
+# psspy.dist_machine_trip(107, r"1")  # 423
+# psspy.dist_machine_trip(321, r"1")  # 270
+psspy.dist_machine_trip(301, r"1")  # 150
+psspy.run (0, 120, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
@@ -70,7 +72,7 @@ avg_arr = [avg for i in range(0, len(chandata['time']))]
 plt.plot   (chandata['time'], avg_arr, label=str(avg_arr[0]))
 print(avg_arr[0])
 
-plt.savefig('after1.png')
+# plt.savefig('after1.png')
 # # print(chandata[5])
 for i in range(2, 5):
     if i == 3:
@@ -106,24 +108,24 @@ for i in range(2, 5):
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
-for i in range(5, NDM+5):
-    for j in range(0, 4):
-        freq    = [f for f in chandata[4*(i-4)+j+1]]
-        plt.figure (4*(i-4)+j+1)
-        if j == 0:
-            plt.plot   (chandata['time'], freq, label='P(I)')
-            ierr, pmax = psspy.macdat(bus[i-5], id[i-5],  'PMAX')
-            pmaxx      = [pmax for k in range(0, len(chandata['time']))]
-            plt.plot   (chandata['time'], pmaxx, label='Pmax')
-        if j == 1:    
-            plt.plot   (chandata['time'], freq, label='Preg(I)')
-        if j == 2:
-            plt.plot   (chandata['time'], freq, label='GREF(I)')
-        if j == 3:
-            plt.plot   (chandata['time'], freq, label='AAC(I)')
-        plt.legend ()
-        plt.xlim   ([0,chandata['time'][-1]])
-        plt.xlabel ('time')
+# for i in range(5, NDM+5):
+#     for j in range(0, 4):
+#         freq    = [f for f in chandata[4*(i-4)+j+1]]
+#         plt.figure (4*(i-4)+j+1)
+#         if j == 0:
+#             plt.plot   (chandata['time'], freq, label='P(I)')
+#             ierr, pmax = psspy.macdat(bus[i-5], id[i-5],  'PMAX')
+#             pmaxx      = [pmax for k in range(0, len(chandata['time']))]
+#             plt.plot   (chandata['time'], pmaxx, label='Pmax')
+#         if j == 1:    
+#             plt.plot   (chandata['time'], freq, label='Preg(I)')
+#         if j == 2:
+#             plt.plot   (chandata['time'], freq, label='GREF(I)')
+#         if j == 3:
+#             plt.plot   (chandata['time'], freq, label='AAC(I)')
+#         plt.legend ()
+#         plt.xlim   ([0,chandata['time'][-1]])
+#         plt.xlabel ('time')
 
     # plt.savefig('ACE1590.png')
     # if i == 5:
@@ -139,13 +141,13 @@ for i in range(5, NDM+5):
     #     plt.legend ()
     #     plt.xlim   ([0,chandata['time'][-1]])
     #     plt.xlabel ('time')
-for i in range(37, 38):
-    freq    = [f for f in chandata[i]]
-    plt.figure (i)
-    plt.plot   (chandata['time'], freq, label='freq')
-    plt.legend ()
-    plt.xlim   ([0,chandata['time'][-1]])
-    plt.xlabel ('time')
+# for i in range(37, 38):
+#     freq    = [f for f in chandata[i]]
+#     plt.figure (i)
+#     plt.plot   (chandata['time'], freq, label='freq')
+#     plt.legend ()
+#     plt.xlim   ([0,chandata['time'][-1]])
+#     plt.xlabel ('time')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')

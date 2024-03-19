@@ -20,8 +20,8 @@ $INSERT COMON4.INS
 
       INTEGER   J,      K,       L,       N,      JJ,         KK,        II,      IVEL
       INTEGER NDM,      I,     NUM,   agcyc,   IEAAC, AGC_status,       reg,      IERR
-      REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp
-      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1
+      REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp,   Pab
+      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1,  Ptmp
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
       REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
@@ -37,6 +37,7 @@ $INSERT COMON4.INS
       Td          = CON(J+4)
       POI         = CON(J+5+NDM*2)        ! fault start point
       AACt        = 0.0                   ! ramp rate
+      Pab         = 0
       reg         = 2                     ! 2 nothing 1 regulation up 0 down
       df          = 0.0
 
@@ -96,14 +97,17 @@ C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
       .  ...FIN
       .  ELSE                 ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
+      .  .  AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 C                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
+      .  Ptmp = Pmax(I)-P(I)
+      .  IF (Ptmp.LT.0)   Ptmp   = 0
       .  IF (AAC(I).LT.0) AAC(I) = 0
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
       .  VAR(L+2+4*I-3)      = P(I)
       .  AACt                = AACt+AAC(I)
+      .  Pab                 = Pab+Ptmp
 10    ...CONTINUE
 
 C
@@ -229,12 +233,12 @@ C     .  .  .  .  .  .  .  PRINT *,"state 3"
 C     .  .  .  .  .  .  .  PRINT *,"state 4"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
-      .  .  .  .  .  IF (I.EQ.8)    
-      .  .  .  .  .  .  PRINT *,AAC(I)
-      .  .  .  .  .  .  PRINT *,AACt
-      .  .  .  .  .  .  PRINT *,Pregsys
-      .  .  .  .  .  .  PRINT *,Preg(I)     
-      .  .  .  .  .  ...FIN
+C     .  .  .  .  .  IF (I.EQ.8)    
+C     .  .  .  .  .  .  PRINT *,AAC(I)
+C     .  .  .  .  .  .  PRINT *,AACt
+C     .  .  .  .  .  .  PRINT *,Pregsys
+C     .  .  .  .  .  .  PRINT *,Preg(I)     
+C     .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
       .  .  .  .  .  VAR(L+2+4*I-2) = Preg(I)
       .  .  .  .  .  VAR(L+2+4*I-1) = GREF(IM(I))
