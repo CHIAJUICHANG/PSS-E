@@ -2,8 +2,8 @@
       INCLUDE 'COMON4.INS'
       INTEGER   J,      K,       L,       N,      JJ,         KK,        II,      IVEL
       INTEGER NDM,      I,     NUM,   agcyc,   IEAAC, AGC_status,       reg,      IERR
-      REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp
-      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1
+      REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp,   Pab
+      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1,  Ptmp
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
       REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
@@ -18,6 +18,7 @@
       Td          = CON(J+4)
       POI         = CON(J+5+NDM*2)
       AACt        = 0.0
+      Pab         = 0
       reg         = 2
       df          = 0.0
       DO 1 I = 1, NDM
@@ -63,12 +64,15 @@
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))
       GO TO 32752
 32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      AAC(I) = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
-32752 IF (AAC(I).LT.0) AAC(I) = 0
+      AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
+32752 Ptmp = Pmax(I)-P(I)
+      IF (Ptmp.LT.0)   Ptmp   = 0
+      IF (AAC(I).LT.0) AAC(I) = 0
       IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
       VAR(L+2+4*I-3)      = P(I)
       AACt                = AACt+AAC(I)
+      Pab                 = Pab+Ptmp
 10    CONTINUE
       IF(.NOT.(MODE.EQ.8)) GO TO 32750
       CON_DSCRPT(1) = 'STATE'
@@ -156,12 +160,7 @@
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
 32728 CONTINUE
-32731 IF(.NOT.(I.EQ.8)) GO TO 32726
-      PRINT *,AAC(I)
-      PRINT *,AACt
-      PRINT *,Pregsys
-      PRINT *,Preg(I)
-32726 H(I)           = VAR (IH(I)+1)
+32731 H(I)           = VAR (IH(I)+1)
       VAR(L+2+4*I-2) = Preg(I)
       VAR(L+2+4*I-1) = GREF(IM(I))
       VAR(L+2+4*I)   = AAC (I)
@@ -170,20 +169,20 @@
       VAR(L+35) = Pregsys
 32737 RETURN
       GO TO 32741
-32738 IF(.NOT.(MODE.EQ.4)) GO TO 32725
+32738 IF(.NOT.(MODE.EQ.4)) GO TO 32726
       NINTEG = MAX(NINTEG,K+1)
-32725 CONTINUE
+32726 CONTINUE
 32741 RETURN
 32749 CONTINUE
 20    IF (MODE.EQ.6) GO TO 21
-      IF(.NOT.(MODE.EQ.5)) GO TO 32724
+      IF(.NOT.(MODE.EQ.5)) GO TO 32725
       CALL DOCUHD(*30)
       GO TO 31
-32724 NEW  = .FALSE.
+32725 NEW  = .FALSE.
       DEL2 = 2.*DELT
-      ASSIGN 32722 TO I32723
-      GO TO 32723
-32722 IF(.NOT.(NEW)) RETURN
+      ASSIGN 32723 TO I32724
+      GO TO 32724
+32723 IF(.NOT.(NEW)) RETURN
 31    JJ = J+7
       KK = K+1
       WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM
@@ -237,9 +236,9 @@
 118   FORMAT(10(I5, I3))
 119   FORMAT(5(F8.3))
 120   FORMAT(10(F8.3))
-32723 CONTINUE
-      IF(NEW) GO TO 32721
+32724 CONTINUE
+      IF(NEW) GO TO 32722
       NEW  = .TRUE.
       CALL DOCUHD(*30)
-32721 GO TO I32723
+32722 GO TO I32724
       END
