@@ -50,7 +50,7 @@ psspy.run (0,  1, 1000, 1000, 0)
 # psspy.dist_machine_trip(107, r"1")  # 423
 # psspy.dist_machine_trip(321, r"1")  # 270
 psspy.dist_machine_trip(301, r"1")  # 150
-psspy.run (0, 120, 1000, 1000, 0)
+psspy.run (0, 80, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
