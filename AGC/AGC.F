@@ -118,9 +118,9 @@
      1 GO TO 32737
       PRINT *,TIME
       DO 14 I = 1, NDM
+      Preg(I) = Pregsys*AAC(I)/AACt
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
      1 GO TO 32736
-      Preg(I) = Pregsys*AAC(I)/AACt
       mul     = 1
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
      1O TO 32735
