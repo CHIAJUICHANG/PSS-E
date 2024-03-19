@@ -141,13 +141,13 @@ for i in range(2, 5):
     #     plt.legend ()
     #     plt.xlim   ([0,chandata['time'][-1]])
     #     plt.xlabel ('time')
-# for i in range(37, 38):
-#     freq    = [f for f in chandata[i]]
-#     plt.figure (i)
-#     plt.plot   (chandata['time'], freq, label='freq')
-#     plt.legend ()
-#     plt.xlim   ([0,chandata['time'][-1]])
-#     plt.xlabel ('time')
+for i in range(38, 39):
+    freq    = [f for f in chandata[i]]
+    plt.figure (i)
+    plt.plot   (chandata['time'], freq, label='freq')
+    plt.legend ()
+    plt.xlim   ([0,chandata['time'][-1]])
+    plt.xlabel ('time')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
