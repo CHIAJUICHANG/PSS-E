@@ -240,7 +240,7 @@ C     .  .  .  .  .  .  PRINT *,AACt
 C     .  .  .  .  .  .  PRINT *,Pregsys
 C     .  .  .  .  .  .  PRINT *,Preg(I)     
 C     .  .  .  .  .  ...FIN
-      .  .  .  .  .  IF (TIME.GT.60 .AND. AAC(I).GT.0.5)
+      .  .  .  .  .  IF (TIME.GT.60 .AND. AAC(I).GT.0.1)
       .  .  .  .  .  .  PRINT *,I  
       .  .  .  .  .  .  PRINT *,AAC(I)    
       .  .  .  .  .  ...FIN
