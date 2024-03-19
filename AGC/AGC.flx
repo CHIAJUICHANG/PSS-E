@@ -109,6 +109,7 @@ C                        CON(J+I+4) = ramp rate of generator I
       .  AACt                = AACt+AAC(I)
       .  Pab                 = Pab+Ptmp
 10    ...CONTINUE
+      VAR(L+36) = Pab
 
 C
 C     MODE 8 - ASSIGN DESCRIPTIONS FOR DATA EDITOR
@@ -239,6 +240,10 @@ C     .  .  .  .  .  .  PRINT *,AACt
 C     .  .  .  .  .  .  PRINT *,Pregsys
 C     .  .  .  .  .  .  PRINT *,Preg(I)     
 C     .  .  .  .  .  ...FIN
+      .  .  .  .  .  IF (TIME.GT.57000 .AND. AAC(I).GT.1)
+      .  .  .  .  .  .  PRINT *,I  
+      .  .  .  .  .  .  PRINT *,AAC(I)    
+      .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
       .  .  .  .  .  VAR(L+2+4*I-2) = Preg(I)
       .  .  .  .  .  VAR(L+2+4*I-1) = GREF(IM(I))
