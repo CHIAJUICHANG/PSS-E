@@ -86,22 +86,36 @@ for i in range(2, 5):
 #     # plt.savefig('ACE1590.png')
 #     # if i == 5:
 #     #     plt.savefig('reg.png')
-for i in range(5, 9):
-    if i == 5:
-        freq1    = [f for f in chandata[4*(i-4)+2]]
-        freq2    = [f for f in chandata[4*(i-4)+3]]
-        freq3    = [f for f in chandata[4*(i-4)+4]]
-        freq4    = [f for f in chandata[4*(i-4)+5]]
-    else:
-        plt.figure (i)
-        if i == 5:
-            plt.plot   (chandata['time'], freq1, label='P(I)')
-        if i == 6:    
-            plt.plot   (chandata['time'], freq2, label='Preg(I)')
-        if i == 7:
-            plt.plot   (chandata['time'], freq3, label='GREF(I)')
-        if i == 8:
-            plt.plot   (chandata['time'], freq4, label='AAC(I)')
+# for i in range(5, 9):
+#     if i == 5:
+#         freq1    = [f for f in chandata[4*(i-4)+2]]
+#         freq2    = [f for f in chandata[4*(i-4)+3]]
+#         freq3    = [f for f in chandata[4*(i-4)+4]]
+#         freq4    = [f for f in chandata[4*(i-4)+5]]
+#     plt.figure (i)
+#     if i == 5:
+#         plt.plot   (chandata['time'], freq1, label='P(I)')
+#     if i == 6:    
+#         plt.plot   (chandata['time'], freq2, label='Preg(I)')
+#     if i == 7:
+#         plt.plot   (chandata['time'], freq3, label='GREF(I)')
+#     if i == 8:
+#         plt.plot   (chandata['time'], freq4, label='AAC(I)')
+#     plt.legend ()
+#     plt.xlim   ([0,chandata['time'][-1]])
+#     plt.xlabel ('time')
+for i in range(5, NDM+5):
+    for j in range(0, 4):
+        freq    = [f for f in chandata[4*(i-4)+j+2]]
+        plt.figure (4*(i-4)+j+1)
+        if j == 0:
+            plt.plot   (chandata['time'], freq, label='P(I)')
+        if j == 1:    
+            plt.plot   (chandata['time'], freq, label='Preg(I)')
+        if j == 2:
+            plt.plot   (chandata['time'], freq, label='GREF(I)')
+        if j == 3:
+            plt.plot   (chandata['time'], freq, label='AAC(I)')
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')
