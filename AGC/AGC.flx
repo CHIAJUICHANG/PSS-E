@@ -190,8 +190,7 @@ C     .  .  .  VAR(L)  = VOUT
       .  .  .  tmp     = 0     
       .  .  .  IF (MOD(INT((TIME)/0.001), agcyc) .LE. 0)       !INT(DELT/0.001))
       .  .  .  .  PRINT *,TIME
-      .  .  .  .  IF (reg.EQ.2)
-      .  .  .  .  .  PRINT *,"REG =2" 
+      .  .  .  .  IF (reg.EQ.2) PRINT *,"REG = 2" 
       .  .  .  .  DO 14 I = 1, NDM
       .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
