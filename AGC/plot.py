@@ -46,7 +46,7 @@ for i in range(0, NDM*4+2):
 psspy.strt(0,outfile)
 psspy.run (0,  1, 1000, 1000, 0)
 psspy.dist_machine_trip(107, r"1")
-psspy.run (0, 30, 1000, 1000, 0)
+psspy.run (0, 37, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
@@ -68,79 +68,79 @@ avg_arr = [avg for i in range(0, len(chandata['time']))]
 plt.plot   (chandata['time'], avg_arr, label=str(avg_arr[0]))
 print(avg_arr[0])
 
-# plt.savefig('after1.png')
-# print(chandata[5])
-for i in range(2, 5):
-    if i == 3:
-        continue
-    freq    = [f for f in chandata[i]]
-    plt.figure (i)
-    if i == 2:
-        plt.plot   (chandata['time'], freq, label='ACE')
-    if i == 4:
-        plt.plot   (chandata['time'], freq, label='AACt')    
-    plt.legend ()
-    plt.xlim   ([0,chandata['time'][-1]])
-    plt.xlabel ('time')
-
-#     # plt.savefig('ACE1590.png')
-#     # if i == 5:
-#     #     plt.savefig('reg.png')
-# for i in range(5, 9):
-#     if i == 5:
-#         freq1    = [f for f in chandata[4*(i-4)+2]]
-#         freq2    = [f for f in chandata[4*(i-4)+3]]
-#         freq3    = [f for f in chandata[4*(i-4)+4]]
-#         freq4    = [f for f in chandata[4*(i-4)+5]]
+plt.savefig('after1.png')
+# # print(chandata[5])
+# for i in range(2, 5):
+#     if i == 3:
+#         continue
+#     freq    = [f for f in chandata[i]]
 #     plt.figure (i)
-#     if i == 5:
-#         plt.plot   (chandata['time'], freq1, label='P(I)')
-#     if i == 6:    
-#         plt.plot   (chandata['time'], freq2, label='Preg(I)')
-#     if i == 7:
-#         plt.plot   (chandata['time'], freq3, label='GREF(I)')
-#     if i == 8:
-#         plt.plot   (chandata['time'], freq4, label='AAC(I)')
+#     if i == 2:
+#         plt.plot   (chandata['time'], freq, label='ACE')
+#     if i == 4:
+#         plt.plot   (chandata['time'], freq, label='AACt')    
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
-for i in range(5, NDM+5):
-    for j in range(0, 4):
-        freq    = [f for f in chandata[4*(i-4)+j+2]]
-        plt.figure (4*(i-4)+j+1)
-        if j == 0:
-            plt.plot   (chandata['time'], freq, label='P(I)')
-        if j == 1:    
-            plt.plot   (chandata['time'], freq, label='Preg(I)')
-        if j == 2:
-            plt.plot   (chandata['time'], freq, label='GREF(I)')
-        if j == 3:
-            plt.plot   (chandata['time'], freq, label='AAC(I)')
-        plt.legend ()
-        plt.xlim   ([0,chandata['time'][-1]])
-        plt.xlabel ('time')
-    # plt.savefig('ACE1590.png')
-    # if i == 5:
-    #     plt.savefig('reg.png')
-    # if i == 5:
-    #     AACT = freq3
-    # else:
-    #     for j in range(0, len(freq3)):
-    #         AACT[j] += freq3[j]
-    # if  i == NDM+5-1:
-    #     plt.figure (i+1)
-    #     plt.plot   (chandata['time'], AACT, label='AACT(I)')
-    #     plt.legend ()
-    #     plt.xlim   ([0,chandata['time'][-1]])
-    #     plt.xlabel ('time')
-for i in range(37, 38):
-    freq    = [f for f in chandata[i]]
-    plt.figure (i)
-    plt.plot   (chandata['time'], freq, label='freq')
-    plt.legend ()
-    plt.xlim   ([0,chandata['time'][-1]])
-    plt.xlabel ('time')
-    # plt.savefig('ACE1590.png')
-    # if i == 5:
-    #     plt.savefig('reg.png')
+
+# #     # plt.savefig('ACE1590.png')
+# #     # if i == 5:
+# #     #     plt.savefig('reg.png')
+# # for i in range(5, 9):
+# #     if i == 5:
+# #         freq1    = [f for f in chandata[4*(i-4)+2]]
+# #         freq2    = [f for f in chandata[4*(i-4)+3]]
+# #         freq3    = [f for f in chandata[4*(i-4)+4]]
+# #         freq4    = [f for f in chandata[4*(i-4)+5]]
+# #     plt.figure (i)
+# #     if i == 5:
+# #         plt.plot   (chandata['time'], freq1, label='P(I)')
+# #     if i == 6:    
+# #         plt.plot   (chandata['time'], freq2, label='Preg(I)')
+# #     if i == 7:
+# #         plt.plot   (chandata['time'], freq3, label='GREF(I)')
+# #     if i == 8:
+# #         plt.plot   (chandata['time'], freq4, label='AAC(I)')
+# #     plt.legend ()
+# #     plt.xlim   ([0,chandata['time'][-1]])
+# #     plt.xlabel ('time')
+# for i in range(5, NDM+5):
+#     for j in range(0, 4):
+#         freq    = [f for f in chandata[4*(i-4)+j+1]]
+#         plt.figure (4*(i-4)+j+1)
+#         if j == 0:
+#             plt.plot   (chandata['time'], freq, label='P(I)')
+#         if j == 1:    
+#             plt.plot   (chandata['time'], freq, label='Preg(I)')
+#         if j == 2:
+#             plt.plot   (chandata['time'], freq, label='GREF(I)')
+#         if j == 3:
+#             plt.plot   (chandata['time'], freq, label='AAC(I)')
+#         plt.legend ()
+#         plt.xlim   ([0,chandata['time'][-1]])
+#         plt.xlabel ('time')
+#     # plt.savefig('ACE1590.png')
+#     # if i == 5:
+#     #     plt.savefig('reg.png')
+#     # if i == 5:
+#     #     AACT = freq3
+#     # else:
+#     #     for j in range(0, len(freq3)):
+#     #         AACT[j] += freq3[j]
+#     # if  i == NDM+5-1:
+#     #     plt.figure (i+1)
+#     #     plt.plot   (chandata['time'], AACT, label='AACT(I)')
+#     #     plt.legend ()
+#     #     plt.xlim   ([0,chandata['time'][-1]])
+#     #     plt.xlabel ('time')
+# for i in range(37, 38):
+#     freq    = [f for f in chandata[i]]
+#     plt.figure (i)
+#     plt.plot   (chandata['time'], freq, label='freq')
+#     plt.legend ()
+#     plt.xlim   ([0,chandata['time'][-1]])
+#     plt.xlabel ('time')
+#     # plt.savefig('ACE1590.png')
+#     # if i == 5:
+#     #     plt.savefig('reg.png')
 plt.show   ()
