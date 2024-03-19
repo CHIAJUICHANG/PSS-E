@@ -21,7 +21,7 @@ $INSERT COMON4.INS
       INTEGER   J,      K,       L,       N,      JJ,         KK,        II,      IVEL
       INTEGER NDM,      I,     NUM,   agcyc,   IEAAC, AGC_status,       reg,      IERR
       REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp
-      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul
+      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
       REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
@@ -92,11 +92,11 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       .  P(I)      = PMECH(IM(I))*MBASE(IM(I))
 C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
       .  WHEN (reg.EQ.0)      ! down
-      .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/600.0, -P(I))              ! no get pmin???
+      .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))              ! no get pmin???
       .  ...FIN
       .  ELSE                 ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/600.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
+      .  .  AAC(I) = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 C                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
       .  IF (AAC(I).LT.0) AAC(I) = 0
@@ -183,8 +183,9 @@ C
 C     .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
+      .  .  .  time1   = MOD(INT((TIME)/0.001), agcyc)
       .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
-      .  .  .  .  PRINT *,TIME  
+      .  .  .  .  PRINT *,time1  
       .  .  .  .  DO 14 I = 1, NDM
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
       .  .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt

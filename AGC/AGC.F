@@ -3,7 +3,7 @@
       INTEGER   J,      K,       L,       N,      JJ,         KK,        II,      IVEL
       INTEGER NDM,      I,     NUM,   agcyc,   IEAAC, AGC_status,       reg,      IERR
       REAL     BF,     Kp,      Ki,      Kd,      Td,       AACt,      VINP,      VOUT,    tmp
-      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul
+      REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
       REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
@@ -60,10 +60,10 @@
       ID(I)     = ICON(M+2+2*I)+48
       P(I)      = PMECH(IM(I))*MBASE(IM(I))
       IF(.NOT.(reg.EQ.0)) GO TO 32751
-      AAC(I) = MAX(-CON(J+I+4)*agcyc/600.0, -P(I))
+      AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))
       GO TO 32752
 32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      AAC(I) = MIN(CON(J+I+4)*agcyc/600.0, Pmax(I)-P(I))
+      AAC(I) = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
 32752 IF (AAC(I).LT.0) AAC(I) = 0
       IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
@@ -114,9 +114,10 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
+      time1   = MOD(INT((TIME)/0.001), agcyc)
       IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2
      1))) GO TO 32737
-      PRINT *,TIME
+      PRINT *,time1
       DO 14 I = 1, NDM
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
      1 GO TO 32736
@@ -137,7 +138,8 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32732 tmp = tmp+MAX(Preg(I), AAC(I))
-32733 PRINT *,"state 2"
+      PRINT *,"state 2"
+32733 CONTINUE
 32736 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
      1 GO TO 32731
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
@@ -156,8 +158,9 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
-32728 PRINT *,reg
+      PRINT *,reg
       PRINT *,"state 4"
+32728 CONTINUE
 32731 H(I)           = VAR (IH(I)+1)
       VAR(L+2+3*I-1) = GREF(IM(I))
       VAR(L+2+3*I)   = AAC (I)
