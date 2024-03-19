@@ -41,7 +41,6 @@ psspy.var_channel([4,1885])
 NDM   = 8
 bus   = [704, 831, 832, 861, 862, 863, 864, 865]
 id    = ["4", "1", "1", "1", "1", "1", "1", "1"]
-pmaxx = []
 for i in range(0, NDM*4+2):
     psspy.var_channel([5+i,1886+i])     # L+3 
 
@@ -113,9 +112,8 @@ for i in range(5, NDM+5):
         plt.figure (4*(i-4)+j+1)
         if j == 0:
             plt.plot   (chandata['time'], freq, label='P(I)')
-            ierr, pmax = psspy.macdat(bus[i], id[i],  'PMAX')
-            for k in range(0, len(freq)):
-                pmaxx += [pmax]
+            ierr, pmax = psspy.macdat(bus[i-5], id[i-5],  'PMAX')
+            pmaxx      = [pmax for k in range(0, len(chandata['time']))]
             plt.plot   (chandata['time'], pmaxx, label='Pmax')
         if j == 1:    
             plt.plot   (chandata['time'], freq, label='Preg(I)')

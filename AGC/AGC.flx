@@ -217,7 +217,7 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
-      .  .  .  .  .  .  .  PRINT *,"state 3"
+C     .  .  .  .  .  .  .  PRINT *,"state 3"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
@@ -226,8 +226,14 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)   
-      .  .  .  .  .  .  .  PRINT *,"state 4"
+C     .  .  .  .  .  .  .  PRINT *,"state 4"
       .  .  .  .  .  .  ...FIN
+      .  .  .  .  .  ...FIN
+      .  .  .  .  .  IF (I.EQ.8)    
+      .  .  .  .  .  .  PRINT *,AAC(I)
+      .  .  .  .  .  .  PRINT *,AACt
+      .  .  .  .  .  .  PRINT *,Pregsys
+      .  .  .  .  .  .  PRINT *,Preg(I)     
       .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
       .  .  .  .  .  VAR(L+2+4*I-2) = Preg(I)
@@ -236,7 +242,6 @@ C                                                                               
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
       .  .  .  .  VAR(L+35) = Pregsys
-      .  .  .  .  PRINT *,Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN
