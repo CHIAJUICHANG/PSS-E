@@ -119,9 +119,9 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      IF(.NOT.(MOD(INT((TIME)/0.001), agcyc) .LE. 0)) GO TO 32737
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
+     1 GO TO 32737
       PRINT *,TIME
-      IF (reg.EQ.2) PRINT *,"REG = 2"
       DO 14 I = 1, NDM
       Preg(I) = Pregsys*AAC(I)/AACt
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
@@ -161,7 +161,7 @@
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
 32728 CONTINUE
-32731 IF(.NOT.(TIME.GT.57000 .AND. AAC(I).GT.1)) GO TO 32726
+32731 IF(.NOT.(TIME.GT.60 .AND. AAC(I).GT.1)) GO TO 32726
       PRINT *,I
       PRINT *,AAC(I)
 32726 H(I)           = VAR (IH(I)+1)
