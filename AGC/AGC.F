@@ -159,7 +159,7 @@
       PRINT *,"state 4"
 32728 CONTINUE
 32731 H(I)           = VAR (IH(I)+1)
-      VAR(L+2+4*I-2) = Preg(IM(I))
+      VAR(L+2+4*I-2) = Preg(I)
       VAR(L+2+4*I-1) = GREF(IM(I))
       VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
