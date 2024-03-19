@@ -148,7 +148,6 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32729 tmp = tmp+AAC(I)
-      PRINT *,"state 3"
 32730 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12728
       IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
@@ -156,32 +155,35 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
-      PRINT *,"state 4"
 32728 CONTINUE
-32731 H(I)           = VAR (IH(I)+1)
+32731 IF(.NOT.(I.EQ.8)) GO TO 32726
+      PRINT *,AAC(I)
+      PRINT *,AACt
+      PRINT *,Pregsys
+      PRINT *,Preg(I)
+32726 H(I)           = VAR (IH(I)+1)
       VAR(L+2+4*I-2) = Preg(I)
       VAR(L+2+4*I-1) = GREF(IM(I))
       VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
       VAR(L+35) = Pregsys
-      PRINT *,Pregsys
 32737 RETURN
       GO TO 32741
-32738 IF(.NOT.(MODE.EQ.4)) GO TO 32726
+32738 IF(.NOT.(MODE.EQ.4)) GO TO 32725
       NINTEG = MAX(NINTEG,K+1)
-32726 CONTINUE
+32725 CONTINUE
 32741 RETURN
 32749 CONTINUE
 20    IF (MODE.EQ.6) GO TO 21
-      IF(.NOT.(MODE.EQ.5)) GO TO 32725
+      IF(.NOT.(MODE.EQ.5)) GO TO 32724
       CALL DOCUHD(*30)
       GO TO 31
-32725 NEW  = .FALSE.
+32724 NEW  = .FALSE.
       DEL2 = 2.*DELT
-      ASSIGN 32723 TO I32724
-      GO TO 32724
-32723 IF(.NOT.(NEW)) RETURN
+      ASSIGN 32722 TO I32723
+      GO TO 32723
+32722 IF(.NOT.(NEW)) RETURN
 31    JJ = J+7
       KK = K+1
       WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM
@@ -235,9 +237,9 @@
 118   FORMAT(10(I5, I3))
 119   FORMAT(5(F8.3))
 120   FORMAT(10(F8.3))
-32724 CONTINUE
-      IF(NEW) GO TO 32722
+32723 CONTINUE
+      IF(NEW) GO TO 32721
       NEW  = .TRUE.
       CALL DOCUHD(*30)
-32722 GO TO I32724
+32721 GO TO I32723
       END
