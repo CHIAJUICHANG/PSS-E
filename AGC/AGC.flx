@@ -186,8 +186,8 @@ C     .  .  .  VAR(L)  = VOUT
       .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
       .  .  .  .  PRINT *,TIME
       .  .  .  .  DO 14 I = 1, NDM
+      .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
-      .  .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt
       .  .  .  .  .  .  mul     = 1
       .  .  .  .  .  .  IF (reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))  ! up, Pmech < Pmax 
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
