@@ -114,7 +114,7 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1) .AND. (reg.NE.2)))
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
      1 GO TO 32737
       PRINT *,TIME
       DO 14 I = 1, NDM
@@ -129,6 +129,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32734 tmp = tmp+MIN(Preg(I), AAC(I))
+      PRINT *,"state 1"
 32735 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12733
       IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
@@ -136,6 +137,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32732 tmp = tmp+MAX(Preg(I), AAC(I))
+      PRINT *,"state 2"
 32733 CONTINUE
 32736 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
      1 GO TO 32731
