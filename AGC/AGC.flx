@@ -102,7 +102,7 @@ C                        CON(J+I+4) = ramp rate of generator I
       .  IF (AAC(I).LT.0) AAC(I) = 0
       .  IF (IM(I).EQ.0) RETURN
       .  IF (TIME.LT.1) H(I) = 1.0
-      .  VAR(L+2+3*I-2)      = P(I)
+      .  VAR(L+2+4*I-3)      = P(I)
       .  AACt                = AACt+AAC(I)
 10    ...CONTINUE
 
@@ -183,9 +183,8 @@ C
 C     .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
-      .  .  .  time1   = MOD(INT((TIME)/0.001), agcyc)
-      .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
-      .  .  .  .  PRINT *,time1  
+      .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 1) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
+      .  .  .  .  PRINT *,TIME
       .  .  .  .  DO 14 I = 1, NDM
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
       .  .  .  .  .  .  Preg(I) = Pregsys*AAC(I)/AACt
@@ -198,7 +197,6 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                   ! MIN(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MIN(Preg(I), AAC(I))                           ! total P command
-      .  .  .  .  .  .  .  PRINT *,"state 1"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
       .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
@@ -207,7 +205,6 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! MAX(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MAX(Preg(I), AAC(I))
-      .  .  .  .  .  .  .  PRINT *,"state 2"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt)))   ! total AAC < system P regulation
@@ -218,7 +215,6 @@ C                                                                               
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
-      .  .  .  .  .  .  .  PRINT *,reg
       .  .  .  .  .  .  .  PRINT *,"state 3"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
@@ -227,17 +223,17 @@ C                                                                               
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
-      .  .  .  .  .  .  .  tmp = tmp+AAC(I)
-      .  .  .  .  .  .  .  PRINT *,reg     
+      .  .  .  .  .  .  .  tmp = tmp+AAC(I)   
       .  .  .  .  .  .  .  PRINT *,"state 4"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
-      .  .  .  .  .  VAR(L+2+3*I-1) = GREF(IM(I))
-      .  .  .  .  .  VAR(L+2+3*I)   = AAC (I)      
+      .  .  .  .  .  VAR(L+2+4*I-2) = Preg(IM(I))
+      .  .  .  .  .  VAR(L+2+4*I-1) = GREF(IM(I))
+      .  .  .  .  .  VAR(L+2+4*I)   = AAC (I)      
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
-      .  .  .  .  VAR(L+27) = Pregsys
+      .  .  .  .  VAR(L+35) = Pregsys
       .  .  .  .  PRINT *,Pregsys
       .  .  .  ...FIN
       .  .  .  RETURN 

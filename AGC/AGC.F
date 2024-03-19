@@ -67,7 +67,7 @@
 32752 IF (AAC(I).LT.0) AAC(I) = 0
       IF (IM(I).EQ.0) RETURN
       IF (TIME.LT.1) H(I) = 1.0
-      VAR(L+2+3*I-2)      = P(I)
+      VAR(L+2+4*I-3)      = P(I)
       AACt                = AACt+AAC(I)
 10    CONTINUE
       IF(.NOT.(MODE.EQ.8)) GO TO 32750
@@ -114,10 +114,9 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      time1   = MOD(INT((TIME)/0.001), agcyc)
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1000) .AND. (reg.NE.2
-     1))) GO TO 32737
-      PRINT *,time1
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 1) .AND. (reg.NE.2)))
+     1 GO TO 32737
+      PRINT *,TIME
       DO 14 I = 1, NDM
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
      1 GO TO 32736
@@ -130,7 +129,6 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32734 tmp = tmp+MIN(Preg(I), AAC(I))
-      PRINT *,"state 1"
 32735 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12733
       IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
@@ -138,7 +136,6 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
 32732 tmp = tmp+MAX(Preg(I), AAC(I))
-      PRINT *,"state 2"
 32733 CONTINUE
 32736 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
      1 GO TO 32731
@@ -149,7 +146,6 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32729 tmp = tmp+AAC(I)
-      PRINT *,reg
       PRINT *,"state 3"
 32730 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
      12728
@@ -158,15 +154,15 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
-      PRINT *,reg
       PRINT *,"state 4"
 32728 CONTINUE
 32731 H(I)           = VAR (IH(I)+1)
-      VAR(L+2+3*I-1) = GREF(IM(I))
-      VAR(L+2+3*I)   = AAC (I)
+      VAR(L+2+4*I-2) = Preg(IM(I))
+      VAR(L+2+4*I-1) = GREF(IM(I))
+      VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
-      VAR(L+27) = Pregsys
+      VAR(L+35) = Pregsys
       PRINT *,Pregsys
 32737 RETURN
       GO TO 32741
