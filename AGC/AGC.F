@@ -49,10 +49,10 @@
       df      = df*60.0/NDM
       ACE     = -10.0*BF*df
       VAR(L)  = ACE
-      IF(.NOT.(df.GE.0.01)) GO TO 32754
+      IF(.NOT.(df.GE.0.03)) GO TO 32754
       reg = 0
       GO TO 32755
-32754 IF(.NOT.(df.LE.-0.01)) GO TO 32753
+32754 IF(.NOT.(df.LE.-0.03)) GO TO 32753
       reg = 1
       GO TO 32755
 32753 reg = 2
@@ -64,7 +64,7 @@
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))
       GO TO 32752
 32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
+      AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, 100-P(I))
 32752 Ptmp = Pmax(I)-P(I)
       IF (Ptmp.LT.0)   Ptmp   = 0
       IF (AAC(I).LT.0) AAC(I) = 0
@@ -160,6 +160,7 @@
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
       GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
 32727 tmp = tmp+AAC(I)
+      PRINT *,"state 4"
 32728 CONTINUE
 32731 IF(.NOT.(TIME.GT.40 .AND. AAC(I).GT.0.1)) GO TO 32726
       PRINT *,I
@@ -171,6 +172,7 @@
 14    CONTINUE
       VAR(L+2)  = AACt
       VAR(L+35) = Pregsys
+      IF (abs(Pregsys) .GE. abs(AACt)) PRINT *,"not enough"
 32737 RETURN
       GO TO 32741
 32738 IF(.NOT.(MODE.EQ.4)) GO TO 32725

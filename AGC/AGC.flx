@@ -76,10 +76,10 @@ C     df      = (BSFREQ(1910)+BSFREQ(2480)+BSFREQ(2650))*60.0/3.0      ! average
       VAR(L)  = ACE
 
       CONDITIONAL
-      .  (df.GE.0.01) 
+      .  (df.GE.0.03) 
       .  .  reg = 0       ! regulation down
       .  ...FIN
-      .  (df.LE.-0.01)
+      .  (df.LE.-0.03)
       .  .  reg = 1       ! regulation up
       .  ...FIN
       .  (OTHERWISE)
@@ -97,7 +97,7 @@ C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
       .  ...FIN
       .  ELSE                 ! up
       .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      .  .  AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
+      .  .  AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, 100-P(I))        ! why/60000? for p.u.??? 
 C                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
       .  Ptmp = Pmax(I)-P(I)
@@ -231,7 +231,7 @@ C     .  .  .  .  .  .  .  PRINT *,"state 3"
       .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)   
-C     .  .  .  .  .  .  .  PRINT *,"state 4"
+      .  .  .  .  .  .  .  PRINT *,"state 4"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  ...FIN
 C     .  .  .  .  .  IF (I.EQ.8)    
@@ -251,6 +251,7 @@ C     .  .  .  .  .  ...FIN
 14    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)  = AACt
       .  .  .  .  VAR(L+35) = Pregsys
+      .  .  .  .  IF (abs(Pregsys) .GE. abs(AACt)) PRINT *,"not enough"
       .  .  .  ...FIN
       .  .  .  RETURN 
       .  .  ...FIN
