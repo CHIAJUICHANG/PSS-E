@@ -21,6 +21,14 @@
       Pab         = 0
       reg         = 2
       df          = 0.0
+      Pmax(1)     = 240.5
+      Pmax(2)     = 105.0
+      Pmax(3)     = 105.0
+      Pmax(4)     = 24.05
+      Pmax(5)     = 24.05
+      Pmax(6)     = 24.05
+      Pmax(7)     = 24.05
+      Pmax(8)     = 24.05
       DO 1 I = 1, NDM
       IBUS(I)  = ICON(M+1+2*I)
       ID(I)    = ICON(M+2+2*I)+48
@@ -63,8 +71,7 @@
       IF(.NOT.(reg.EQ.0)) GO TO 32751
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))
       GO TO 32752
-32751 CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, 400-P(I))
+32751 AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
 32752 Ptmp = Pmax(I)-P(I)
       IF (Ptmp.LT.0)   Ptmp   = 0
       IF (AAC(I).LT.0) AAC(I) = 0
