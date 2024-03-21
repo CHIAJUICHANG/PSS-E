@@ -24,7 +24,7 @@ $INSERT COMON4.INS
       REAL     df,     Yi,      Yd,      IN,     ACE,       DEL2,   Pregsys,       mul,  time1,  Ptmp
       LOGICAL NEW
       INTEGER          ::   IM(42), IBUS(42),   ID(42), IB(42), ST(42),  IH(42)
-      REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42)
+      REAL             :: Pmax(42), Preg(42),  AAC(42),  P(42),  R(42),   H(42), Pmax(42)
       CHARACTER(len=20)::   GOVNAM  
       
       AGC_status  = ICON(M)               ! AGC_status = 1
@@ -40,6 +40,14 @@ $INSERT COMON4.INS
       Pab         = 0
       reg         = 2                     ! 2 nothing 1 regulation up 0 down
       df          = 0.0
+      Pmax(1)     = 240.5
+      Pmax(2)     = 105.0
+      Pmax(3)     = 105.0
+      Pmax(4)     = 24.05
+      Pmax(5)     = 24.05
+      Pmax(6)     = 24.05
+      Pmax(7)     = 24.05
+      Pmax(8)     = 24.05
 
       DO 1 I = 1, NDM
       .  IBUS(I)  = ICON(M+1+2*I)
@@ -96,8 +104,8 @@ C     .  P(I)      = GREF (IM(I))*MBASE(IM(I))
       .  .  AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))              ! no get pmin???
       .  ...FIN
       .  ELSE                 ! up
-      .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
-      .  .  AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, 400-P(I))        ! why/60000? for p.u.??? 
+C     .  .  CALL MACDAT (IBUS(I), CHAR(ID(I)), 'PMAX', Pmax(I), IEAAC)
+      .  .  AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))        ! why/60000? for p.u.??? 
 C                        CON(J+I+4) = ramp rate of generator I
       .  ...FIN
       .  Ptmp = Pmax(I)-P(I)

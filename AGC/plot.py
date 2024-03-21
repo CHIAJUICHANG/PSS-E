@@ -39,18 +39,19 @@ psspy.var_channel([2,1883])
 psspy.var_channel([3,1884]) 
 psspy.var_channel([4,1885])
 NDM   = 8
-bus   = [704, 831, 832, 861, 862, 863, 864, 865]
-id    = ["4", "1", "1", "1", "1", "1", "1", "1"]
+bus   = [  704, 831, 832,   861,   862,   863,   864,   865]
+id    = [  "4", "1", "1",   "1",   "1",   "1",   "1",   "1"]
+pmax  = [240.5, 105, 105, 24.05, 24.05, 24.05, 24.05, 24.05]
 for i in range(0, NDM*4+2):
     psspy.var_channel([5+i,1886+i])     # L+3 
 
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
-psspy.run (0,  1, 1000, 1000, 0)
-# psspy.dist_machine_trip(107, r"1")  # 423
+psspy.run (0,  1, 10000, 10000, 0)
+psspy.dist_machine_trip(107, r"1")  # 423
 # psspy.dist_machine_trip(321, r"1")  # 270
-psspy.dist_machine_trip(301, r"1")  # 150
-psspy.run (0, 80, 1000, 1000, 0)
+# psspy.dist_machine_trip(301, r"1")  # 150
+psspy.run (0, 180, 10000, 10000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
@@ -108,24 +109,25 @@ for i in range(2, 5):
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
-# for i in range(5, NDM+5):
-#     for j in range(0, 4):
-#         freq    = [f for f in chandata[4*(i-4)+j+1]]
-#         plt.figure (4*(i-4)+j+1)
-#         if j == 0:
-#             plt.plot   (chandata['time'], freq, label='P(I)')
-#             ierr, pmax = psspy.macdat(bus[i-5], id[i-5],  'PMAX')
-#             pmaxx      = [pmax for k in range(0, len(chandata['time']))]
-#             plt.plot   (chandata['time'], pmaxx, label='Pmax')
-#         if j == 1:    
-#             plt.plot   (chandata['time'], freq, label='Preg(I)')
-#         if j == 2:
-#             plt.plot   (chandata['time'], freq, label='GREF(I)')
-#         if j == 3:
-#             plt.plot   (chandata['time'], freq, label='AAC(I)')
-#         plt.legend ()
-#         plt.xlim   ([0,chandata['time'][-1]])
-#         plt.xlabel ('time')
+for i in range(5, NDM+5):
+    for j in range(0, 4):
+        freq    = [f for f in chandata[4*(i-4)+j+1]]
+        plt.figure (4*(i-4)+j+1)
+        if j == 0:
+            plt.plot   (chandata['time'], freq, label='P(I)')
+            pmaxx      = [pmax(i-5) for k in range(0, len(chandata['time']))]
+            plt.plot   (chandata['time'], pmaxx, label='Pmax')
+            print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
+        if j == 1:    
+            plt.plot   (chandata['time'], freq, label='Preg(I)')
+        if j == 2:
+            plt.plot   (chandata['time'], freq, label='GREF(I)')
+        if j == 3:
+            plt.plot   (chandata['time'], freq, label='AAC(I)')
+            print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
+        plt.legend ()
+        plt.xlim   ([0,chandata['time'][-1]])
+        plt.xlabel ('time')
 
     # plt.savefig('ACE1590.png')
     # if i == 5:
