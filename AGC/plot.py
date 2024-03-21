@@ -112,8 +112,8 @@ for i in range(2, 5):
 for i in range(5, NDM+5):
     for j in range(0, 4):
         freq    = [f for f in chandata[4*(i-4)+j+1]]
-        plt.figure (4*(i-4)+j+1)
         if j == 0:
+            plt.figure (4*(i-4)+j+1)
             plt.plot   (chandata['time'], freq, label='P(I)')
             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
             plt.plot   (chandata['time'], pmaxx, label='Pmax')

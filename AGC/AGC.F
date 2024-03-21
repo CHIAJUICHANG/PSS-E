@@ -138,7 +138,8 @@
 22    CONTINUE
       VAR(L+2)   = AACt
       VAR(L+35)  = Pregsys
-      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,TIME
+      PRINT '("time:    ", F8.8)',TIME
       PRINT *,'NOT reg'
 32737 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
      1 GO TO 32736
