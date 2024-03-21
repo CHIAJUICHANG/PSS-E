@@ -116,7 +116,7 @@ C                        CON(J+I+4) = ramp rate of generator I
       .  VAR(L+2+4*I-3)      = P(I)
       .  AACt                = AACt+AAC(I)
       .  Pab                 = Pab+Ptmp
-      .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2))
+      .  IF (reg.EQ.2)
       .  .  Pregsys = 0
       .  .  Preg(I) = 0
       .  .  AAC(I)  = 0

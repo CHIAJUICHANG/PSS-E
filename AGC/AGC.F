@@ -80,8 +80,7 @@
       VAR(L+2+4*I-3)      = P(I)
       AACt                = AACt+AAC(I)
       Pab                 = Pab+Ptmp
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2)))
-     1 GO TO 32750
+      IF(.NOT.(reg.EQ.2)) GO TO 32750
       Pregsys = 0
       Preg(I) = 0
       AAC(I)  = 0
