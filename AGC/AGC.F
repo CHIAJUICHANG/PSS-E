@@ -138,9 +138,10 @@
 22    CONTINUE
       VAR(L+2)   = AACt
       VAR(L+35)  = Pregsys
+      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,'NOT reg'
 32737 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
      1 GO TO 32736
-      PRINT *,TIME
       DO 14 I = 1, NDM
       Preg(I) = Pregsys*AAC(I)/AACt
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
@@ -181,9 +182,8 @@
 32726 tmp = tmp+AAC(I)
       PRINT *,"state 4"
 32727 CONTINUE
-32730 IF(.NOT.(TIME.GT.60 .AND. AAC(I).GT.0.1)) GO TO 32725
-      PRINT *,I
-      PRINT *,AAC(I)
+32730 IF(.NOT.(TIME.GT.40 .AND. AAC(I).GT.0.1)) GO TO 32725
+      PRINT '("AAC(", I5, ") = ", F8.2)', I, AAC(I)
 32725 H(I)           = VAR (IH(I)+1)
       VAR(L+2+4*I-2) = Preg(I)
       VAR(L+2+4*I-1) = GREF(IM(I))
@@ -191,23 +191,29 @@
 14    CONTINUE
       VAR(L+2)  = AACt
       VAR(L+35) = Pregsys
-      IF (abs(Pregsys) .GE. abs(AACt)) PRINT *,"not enough"
+      IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32724
+      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,'P is not enough'
+32724 IF(.NOT.(abs(Pregsys) .LE. abs(AACt))) GO TO 32723
+      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,'P is enough'
+32723 CONTINUE
 32736 RETURN
       GO TO 32741
-32738 IF(.NOT.(MODE.EQ.4)) GO TO 32724
+32738 IF(.NOT.(MODE.EQ.4)) GO TO 32722
       NINTEG = MAX(NINTEG,K+1)
-32724 CONTINUE
+32722 CONTINUE
 32741 RETURN
 32749 CONTINUE
 20    IF (MODE.EQ.6) GO TO 21
-      IF(.NOT.(MODE.EQ.5)) GO TO 32723
+      IF(.NOT.(MODE.EQ.5)) GO TO 32721
       CALL DOCUHD(*30)
       GO TO 31
-32723 NEW  = .FALSE.
+32721 NEW  = .FALSE.
       DEL2 = 2.*DELT
-      ASSIGN 32721 TO I32722
-      GO TO 32722
-32721 IF(.NOT.(NEW)) RETURN
+      ASSIGN 32719 TO I32720
+      GO TO 32720
+32719 IF(.NOT.(NEW)) RETURN
 31    JJ = J+7
       KK = K+1
       WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM
@@ -261,9 +267,9 @@
 118   FORMAT(10(I5, I3))
 119   FORMAT(5(F8.3))
 120   FORMAT(10(F8.3))
-32722 CONTINUE
-      IF(NEW) GO TO 32720
+32720 CONTINUE
+      IF(NEW) GO TO 32718
       NEW  = .TRUE.
       CALL DOCUHD(*30)
-32720 GO TO I32722
+32718 GO TO I32720
       END
