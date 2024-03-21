@@ -51,7 +51,7 @@ psspy.run (0,  1, 1000, 1000, 0)
 psspy.dist_machine_trip(107, r"1")  # 423
 # psspy.dist_machine_trip(321, r"1")  # 270
 # psspy.dist_machine_trip(301, r"1")  # 150
-psspy.run (0, 80, 1000, 1000, 0)
+psspy.run (0, 45, 1000, 1000, 0)
 
 # ----------------------plot-------------------------
 chnfobj = dyntools.CHNF(outfile)
@@ -117,14 +117,14 @@ for i in range(5, NDM+5):
             plt.plot   (chandata['time'], freq, label='P(I)')
             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
             plt.plot   (chandata['time'], pmaxx, label='Pmax')
-            print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
-        if j == 1:    
-            plt.plot   (chandata['time'], freq, label='Preg(I)')
-        if j == 2:
-            plt.plot   (chandata['time'], freq, label='GREF(I)')
-        if j == 3:
-            plt.plot   (chandata['time'], freq, label='AAC(I)')
-            print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
+        #     print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
+        # if j == 1:    
+        #     plt.plot   (chandata['time'], freq, label='Preg(I)')
+        # if j == 2:
+        #     plt.plot   (chandata['time'], freq, label='GREF(I)')
+        # if j == 3:
+        #     plt.plot   (chandata['time'], freq, label='AAC(I)')
+        #     print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')

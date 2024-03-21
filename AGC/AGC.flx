@@ -261,9 +261,8 @@ C     .  .  .  .  .  .  PRINT *,AACt
 C     .  .  .  .  .  .  PRINT *,Pregsys
 C     .  .  .  .  .  .  PRINT *,Preg(I)     
 C     .  .  .  .  .  ...FIN
-      .  .  .  .  .  IF (TIME.GT.60 .AND. AAC(I).GT.0.1)
-      .  .  .  .  .  .  PRINT *,I  
-      .  .  .  .  .  .  PRINT *,AAC(I)    
+      .  .  .  .  .  IF (TIME.GT.40 .AND. AAC(I).GT.0.1)
+      .  .  .  .  .  .  PRINT '("AAC(", I5, ") = ", F8.2)', I, AAC(I)   
       .  .  .  .  .  ...FIN
       .  .  .  .  .  H(I)           = VAR (IH(I)+1)
       .  .  .  .  .  VAR(L+2+4*I-2) = Preg(I)
