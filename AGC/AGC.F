@@ -75,64 +75,70 @@
 32752 Ptmp = Pmax(I)-P(I)
       IF (Ptmp.LT.0)   Ptmp   = 0
       IF (AAC(I).LT.0) AAC(I) = 0
-      IF (IM(I).EQ.0) RETURN
-      IF (TIME.LT.1) H(I) = 1.0
+      IF (IM(I).EQ.0)  RETURN
+      IF (TIME.LT.1)   H(I)   = 1.0
       VAR(L+2+4*I-3)      = P(I)
       AACt                = AACt+AAC(I)
       Pab                 = Pab+Ptmp
-      IF(.NOT.(reg.EQ.2)) GO TO 32750
-      Pregsys = 0
-      Preg(I) = 0
-      AAC(I)  = 0
-      AACt    = 0
-32750 CONTINUE
 10    CONTINUE
       VAR(L+36) = Pab
-      IF(.NOT.(MODE.EQ.8)) GO TO 32749
+      IF(.NOT.(MODE.EQ.8)) GO TO 32750
       CON_DSCRPT(1) = 'STATE'
       CON_DSCRPT(2) = 'AGC cycle time'
       CON_DSCRPT(3) = 'NDM'
       RETURN
-32749 IF (MODE.GT.4) GO TO 20
-      IF(.NOT.(MIDTRM)) GO TO 32747
-      IF(.NOT.(INSITR)) GO TO 32745
+32750 IF (MODE.GT.4) GO TO 20
+      IF(.NOT.(MIDTRM)) GO TO 32748
+      IF(.NOT.(INSITR)) GO TO 32746
       IN = VAR(L)
       IF (KPAUSE.EQ.2) IN = (IN+STORMT(2*K-1))*0.50
       Yi = Ki*DELT/2.0*IN+STORE(K)
       Yd = (IN*Kd+STORE(K+1))/(1.0+2.0*Td/DELT)
-      GO TO 32746
-32745 IF(.NOT.(MODE.EQ.1)) GO TO 32744
+      GO TO 32747
+32746 IF(.NOT.(MODE.EQ.1)) GO TO 32745
       IN = VAR(L)
       STORE(K)   = 0.0
       STORE(K+1) = IN*Kd
-      GO TO 32746
-32744 IF(.NOT.(MODE.EQ.2)) GO TO 32743
-      IF(.NOT.(KPAUSE.EQ.1)) GO TO 32741
+      GO TO 32747
+32745 IF(.NOT.(MODE.EQ.2)) GO TO 32744
+      IF(.NOT.(KPAUSE.EQ.1)) GO TO 32742
       STORMT(2*K-1) = VAR(L)
-      GO TO 32742
-32741 IN = VAR(L)
+      GO TO 32743
+32742 IN = VAR(L)
       IF (KPAUSE.EQ.2) IN = (IN+STORMT(2*K-1))*0.50
-32742 Yi         = Ki*DELT/2.0*IN+STORE(K)
+32743 Yi         = Ki*DELT/2.0*IN+STORE(K)
       STORE(K)   = Yi+IN*Ki*DELT/2.0
       Yd         = (IN*Kd+STORE(K+1))/(1.0+2.0*Td/DELT)
       STORE(K+1) = IN*Kd-Yd*(1.0-2.0*Td/DELT)
-32743 CONTINUE
-32746 RETURN
-      GO TO 32748
-32747 IF(.NOT.(MODE.EQ.1)) GO TO 32739
+32744 CONTINUE
+32747 RETURN
+      GO TO 32749
+32748 IF(.NOT.(MODE.EQ.1)) GO TO 32740
       VOUT   = VAR(L+1)
       VINP   = PID_MODE1(Kp,Ki,Kd,Td,VOUT,K,K+1,IEAAC)
-      GO TO 32740
-32739 IF(.NOT.(MODE.EQ.2)) GO TO 32738
+      GO TO 32741
+32740 IF(.NOT.(MODE.EQ.2)) GO TO 32739
       VINP     = VAR(L)
       VOUT     = PID_MODE2(Kp, Ki, Kd, Td, VINP, K, K+1)
-      GO TO 32740
-32738 IF(.NOT.(MODE.EQ.3)) GO TO 32737
+      GO TO 32741
+32739 IF(.NOT.(MODE.EQ.3)) GO TO 32738
       VINP    = VAR(L)
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2)))
+     1 GO TO 32737
+      AACt    = 0
+      Pregsys = 0
+      DO 22 I = 1, NDM
+      Preg(I) = 0
+      AAC(I)  = 0
+      VAR(L+2+4*I-2) = Preg(I)
+      VAR(L+2+4*I)   = AAC (I)
+22    CONTINUE
+      VAR(L+2)   = AACt
+      VAR(L+35)  = Pregsys
+32737 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
      1 GO TO 32736
       PRINT *,TIME
       DO 14 I = 1, NDM
@@ -187,12 +193,12 @@
       VAR(L+35) = Pregsys
       IF (abs(Pregsys) .GE. abs(AACt)) PRINT *,"not enough"
 32736 RETURN
-      GO TO 32740
-32737 IF(.NOT.(MODE.EQ.4)) GO TO 32724
+      GO TO 32741
+32738 IF(.NOT.(MODE.EQ.4)) GO TO 32724
       NINTEG = MAX(NINTEG,K+1)
 32724 CONTINUE
-32740 RETURN
-32748 CONTINUE
+32741 RETURN
+32749 CONTINUE
 20    IF (MODE.EQ.6) GO TO 21
       IF(.NOT.(MODE.EQ.5)) GO TO 32723
       CALL DOCUHD(*30)
