@@ -109,14 +109,14 @@ for i in range(2, 5):
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
-for i in range(5, NDM+5):
-    for j in range(0, 4):
-        freq    = [f for f in chandata[4*(i-4)+j+1]]
-        if j == 0:
-            plt.figure (4*(i-4)+j+1)
-            plt.plot   (chandata['time'], freq, label='P(I)')
-            pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
-            plt.plot   (chandata['time'], pmaxx, label='Pmax')
+# for i in range(5, NDM+5):
+#     for j in range(0, 4):
+#         freq    = [f for f in chandata[4*(i-4)+j+1]]
+#         if j == 0:
+#             plt.figure (4*(i-4)+j+1)
+#             plt.plot   (chandata['time'], freq, label='P(I)')
+#             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
+#             plt.plot   (chandata['time'], pmaxx, label='Pmax')
         #     print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
         # if j == 1:    
         #     plt.plot   (chandata['time'], freq, label='Preg(I)')
@@ -125,9 +125,9 @@ for i in range(5, NDM+5):
         # if j == 3:
         #     plt.plot   (chandata['time'], freq, label='AAC(I)')
         #     print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
-        plt.legend ()
-        plt.xlim   ([0,chandata['time'][-1]])
-        plt.xlabel ('time')
+        # plt.legend ()
+        # plt.xlim   ([0,chandata['time'][-1]])
+        # plt.xlabel ('time')
 
     # plt.savefig('ACE1590.png')
     # if i == 5:

@@ -126,8 +126,8 @@
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
-      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2)))
-     1 GO TO 32737
+      IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2) .
+     1AND. (TIME.GT.1))) GO TO 32737
       AACt    = 0
       Pregsys = 0
       DO 22 I = 1, NDM
@@ -139,8 +139,7 @@
       VAR(L+2)   = AACt
       VAR(L+35)  = Pregsys
       PRINT *,TIME
-      PRINT '("time:    ", F8.8)',TIME
-      PRINT *,'NOT reg'
+      PRINT *,'reg not work'
 32737 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
      1 GO TO 32736
       DO 14 I = 1, NDM
@@ -193,10 +192,10 @@
       VAR(L+2)  = AACt
       VAR(L+35) = Pregsys
       IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32724
-      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,TIME
       PRINT *,'P is not enough'
 32724 IF(.NOT.(abs(Pregsys) .LE. abs(AACt))) GO TO 32723
-      PRINT '("time:    ", F3.6)',TIME
+      PRINT *,TIME
       PRINT *,'P is enough'
 32723 CONTINUE
 32736 RETURN

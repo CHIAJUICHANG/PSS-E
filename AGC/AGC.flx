@@ -197,7 +197,7 @@ C
 C     .  .  .  VAR(L)  = VOUT
       .  .  .  Pregsys = VOUT       ! PID output, Preg
       .  .  .  tmp     = 0
-      .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2))
+      .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2) .AND. (TIME.GT.1))
       .  .  .  .  AACt    = 0
       .  .  .  .  Pregsys = 0
       .  .  .  .  DO 22 I = 1, NDM
@@ -208,9 +208,8 @@ C     .  .  .  VAR(L)  = VOUT
 22    .  .  .  .  ...CONTINUE
       .  .  .  .  VAR(L+2)   = AACt
       .  .  .  .  VAR(L+35)  = Pregsys
-      .  .  .  .  PRINT *,TIME
-      .  .  .  .  PRINT '("time:    ", F8.8)',TIME       
-      .  .  .  .  PRINT *,'NOT reg'
+      .  .  .  .  PRINT *,TIME    
+      .  .  .  .  PRINT *,'reg not work'
       .  .  .  ...FIN
       .  .  .  IF ((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2))       !INT(DELT/0.001)) 
       .  .  .  .  DO 14 I = 1, NDM
@@ -274,11 +273,11 @@ C     .  .  .  .  .  ...FIN
       .  .  .  .  VAR(L+2)  = AACt
       .  .  .  .  VAR(L+35) = Pregsys
       .  .  .  .  IF (abs(Pregsys) .GT. abs(AACt))
-      .  .  .  .  .  PRINT '("time:    ", F3.6)',TIME       
+      .  .  .  .  .  PRINT *,TIME       
       .  .  .  .  .  PRINT *,'P is not enough'
       .  .  .  .  ...FIN
       .  .  .  .  IF (abs(Pregsys) .LE. abs(AACt))
-      .  .  .  .  .  PRINT '("time:    ", F3.6)',TIME       
+      .  .  .  .  .  PRINT *,TIME       
       .  .  .  .  .  PRINT *,'P is enough'
       .  .  .  .  ...FIN
       .  .  .  ...FIN
