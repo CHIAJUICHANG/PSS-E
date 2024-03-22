@@ -49,7 +49,7 @@ for i in range(0, NDM*4+2):
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
 psspy.run (0,  1, 1000, 1000, 0)
-psspy.dist_machine_trip(107, r"1")  # 423
+# psspy.dist_machine_trip(107, r"1")  # 423
 # psspy.dist_machine_trip(108, r"1")  # 423
 # psspy.dist_machine_trip(109, r"1")  # 423
 # psspy.dist_machine_trip(321, r"1")  # 270
@@ -73,16 +73,12 @@ for i in range(0, len(chandata['time'])):
         steady_s += 1 
 avg = avg/steady_s
 avg_arr = [avg for i in range(0, len(chandata['time']))]
-print(avg_arr)
-print(avg_arr[0])
-print(type(str(avg_arr[0])))
-ss = str(avg_arr[0])
-plt.plot   (chandata['time'], avg_arr, label=ss)
+plt.plot   (chandata['time'], avg_arr, label=str(avg_arr[0]))
 print("----------------------------------------")
 print("freqence = " + str(avg_arr[0]))
 
 # plt.savefig('before.png')
-plt.savefig('after1590.png')
+plt.savefig('before1590_301.png')
 # # print(chandata[5])
 for i in range(2, 5):
     if i == 3:
@@ -91,14 +87,16 @@ for i in range(2, 5):
     plt.figure (i)
     if i == 2:
         plt.plot   (chandata['time'], freq, label='ACE')
-        plt.savefig('ACE1590.png')
+        plt.legend ()
+        plt.xlim   ([0,chandata['time'][-1]])
+        plt.xlabel ('time')  
+        plt.savefig('ACE1590_before_301.png')
     if i == 4:
-        plt.plot   (chandata['time'], freq, label='AACt')
-        plt.savefig('AACt1590.png')    
-    plt.legend ()
-    plt.xlim   ([0,chandata['time'][-1]])
-    plt.xlabel ('time')
-
+        plt.plot   (chandata['time'], freq, label='AACt') 
+        plt.legend ()
+        plt.xlim   ([0,chandata['time'][-1]])
+        plt.xlabel ('time')  
+        plt.savefig('AACt1590_before_301.png') 
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
@@ -161,7 +159,7 @@ for i in range(38, 39):
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
-    plt.savefig('Pava.png')
+    plt.savefig('Pava_before_301.png')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
