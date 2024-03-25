@@ -74,7 +74,12 @@ C                                         ! IM(I) = machine  index
       .  ...FIN
       .  IF (GOVNAM.EQ.'WPIDHY')
       .  .  CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'CON',  IVEL, IERR)
-      .  .  R(I)  = (CON(IVEL+1))
+      .  .  R(I)  = CON(IVEL+1)
+      .  .  CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
+      .  ...FIN
+      .  IF (GOVNAM.EQ.'GAST')
+      .  .  CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'CON',  IVEL, IERR)
+      .  .  R(I)  = CON(IVEL)
       .  .  CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
       .  ...FIN
 1     ...CONTINUE
@@ -217,21 +222,21 @@ C     .  .  .  VAR(L)  = VOUT
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt)))   ! total AAC > system P regulation 
       .  .  .  .  .  .  mul     = 1
       .  .  .  .  .  .  IF (reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))  ! up, Pmech < Pmax 
-C     .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
+      .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
 C                                                                                   ! GREF is p.u.
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)                                         ! VAR(IH(I)+1) = h, mul = (h^3/2)/1.2???
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-C     .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
+      .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                   ! MIN(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MIN(Preg(I), AAC(I))                           ! total P command
       .  .  .  .  .  .  .  PRINT *,"state 1"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
-C     .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
+      .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
 C                                                                    ! VAR(IH(I)+1 = h
-C     .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
+      .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! MAX(Preg(I), AAC(I)) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+MAX(Preg(I), AAC(I))
       .  .  .  .  .  .  .  PRINT *,"state 2"
@@ -239,19 +244,19 @@ C     .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBA
       .  .  .  .  .  ...FIN
       .  .  .  .  .  IF ((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt)))   ! total AAC < system P regulation
       .  .  .  .  .  .  IF (reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))  ! up, Pmech < Pmax
-C     .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))
+      .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-C     .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
+      .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi 
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)
 C     .  .  .  .  .  .  .  PRINT *,"state 3"
       .  .  .  .  .  .  ...FIN
       .  .  .  .  .  .  IF (reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)        ! down, Pmech > 0
-C     .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
+      .  .  .  .  .  .  .  IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
       .  .  .  .  .  .  .  IF (R(I).GT.0.0)                 
       .  .  .  .  .  .  .  .  IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-C     .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
+      .  .  .  .  .  .  .  .  GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
       .  .  .  .  .  .  .  ...FIN                                                      ! AAC(I) = delt Prefi
       .  .  .  .  .  .  .  tmp = tmp+AAC(I)   
       .  .  .  .  .  .  .  PRINT *,"state 4"
