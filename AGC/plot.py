@@ -39,10 +39,10 @@ psspy.bus_frequency_channel([1,704])
 psspy.var_channel([2,1883]) 
 psspy.var_channel([3,1884]) 
 psspy.var_channel([4,1885])
-NDM   = 8
-bus   = [  704, 831, 832,   861,   862,   863,   864,   865]
-id    = [  "4", "1", "1",   "1",   "1",   "1",   "1",   "1"]
-pmax  = [240.5, 105, 105, 24.05, 24.05, 24.05, 24.05, 24.05]
+NDM   = 10
+bus   = [  704, 831, 832,   861,   862,   863,   864,   865,   110,   111]
+id    = [  "4", "1", "1",   "1",   "1",   "1",   "1",   "1",   "1",   "1"]
+pmax  = [240.5, 105, 105, 24.05, 24.05, 24.05, 24.05, 24.05,   500,   500]
 for i in range(0, NDM*4+2):
     psspy.var_channel([5+i,1886+i])     # L+3 
 
@@ -78,7 +78,7 @@ print("----------------------------------------")
 print("freqence = " + str(avg_arr[0]))
 
 # plt.savefig('before.png')
-plt.savefig('before1590_301.png')
+plt.savefig('before1590_110111.png')
 # # print(chandata[5])
 for i in range(2, 5):
     if i == 3:
@@ -90,13 +90,13 @@ for i in range(2, 5):
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')  
-        plt.savefig('ACE1590_before_301.png')
+        plt.savefig('ACE1590_before_110111.png')
     if i == 4:
         plt.plot   (chandata['time'], freq, label='AACt') 
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')  
-        plt.savefig('AACt1590_before_301.png') 
+        plt.savefig('AACt1590_before_110111.png') 
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
@@ -118,25 +118,25 @@ for i in range(2, 5):
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
-# for i in range(5, NDM+5):
-#     for j in range(0, 4):
-#         freq    = [f for f in chandata[4*(i-4)+j+1]]
-#         if j == 0:
-#             plt.figure (4*(i-4)+j+1)
-#             plt.plot   (chandata['time'], freq, label='P(I)')
-#             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
-#             plt.plot   (chandata['time'], pmaxx, label='Pmax')
-        #     print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
-        # if j == 1:    
-        #     plt.plot   (chandata['time'], freq, label='Preg(I)')
-        # if j == 2:
-        #     plt.plot   (chandata['time'], freq, label='GREF(I)')
-        # if j == 3:
-        #     plt.plot   (chandata['time'], freq, label='AAC(I)')
-        #     print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
-        # plt.legend ()
-        # plt.xlim   ([0,chandata['time'][-1]])
-        # plt.xlabel ('time')
+for i in range(5, NDM+5):
+    for j in range(0, 4):
+        freq    = [f for f in chandata[4*(i-4)+j+1]]
+        if j == 0:
+            plt.figure (4*(i-4)+j+1)
+            plt.plot   (chandata['time'], freq, label='P(I)')
+            pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
+            plt.plot   (chandata['time'], pmaxx, label='Pmax')
+            print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
+        if j == 1:    
+            plt.plot   (chandata['time'], freq, label='Preg(I)')
+        if j == 2:
+            plt.plot   (chandata['time'], freq, label='GREF(I)')
+        if j == 3:
+            plt.plot   (chandata['time'], freq, label='AAC(I)')
+            print('AAC('+str(i-4)+')'+str(freq[len(freq)-1]))
+        plt.legend ()
+        plt.xlim   ([0,chandata['time'][-1]])
+        plt.xlabel ('time')
 
     # plt.savefig('ACE1590.png')
     # if i == 5:
@@ -152,14 +152,14 @@ for i in range(2, 5):
     #     plt.legend ()
     #     plt.xlim   ([0,chandata['time'][-1]])
     #     plt.xlabel ('time')
-for i in range(38, 39):
+for i in range(2+NDM*4, 2+NDM*4+1):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='P available')
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
-    plt.savefig('Pava_before_301.png')
+    plt.savefig('Pava_before_110111.png')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')

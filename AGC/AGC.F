@@ -50,29 +50,33 @@
       CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
 32757 IF(.NOT.(GOVNAM.EQ.'WPIDHY')) GO TO 32756
       CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'CON',  IVEL, IERR)
-      R(I)  = (CON(IVEL+1))
+      R(I)  = CON(IVEL+1)
       CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
-32756 CONTINUE
+32756 IF(.NOT.(GOVNAM.EQ.'GAST')) GO TO 32755
+      CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'CON',  IVEL, IERR)
+      R(I)  = CON(IVEL)
+      CALL MDLIND(IBUS(I), CHAR(ID(I)),    'GOV',  'VAR', IH(I), IERR)
+32755 CONTINUE
 1     CONTINUE
       df      = df*60.0/NDM
       ACE     = -10.0*BF*df
       VAR(L)  = ACE
-      IF(.NOT.(df.GE.0.03)) GO TO 32754
+      IF(.NOT.(df.GE.0.03)) GO TO 32753
       reg = 0
-      GO TO 32755
-32754 IF(.NOT.(df.LE.-0.03)) GO TO 32753
+      GO TO 32754
+32753 IF(.NOT.(df.LE.-0.03)) GO TO 32752
       reg = 1
-      GO TO 32755
-32753 reg = 2
-32755 DO 10 I = 1, NDM
+      GO TO 32754
+32752 reg = 2
+32754 DO 10 I = 1, NDM
       IBUS(I)   = ICON(M+1+2*I)
       ID(I)     = ICON(M+2+2*I)+48
       P(I)      = PMECH(IM(I))*MBASE(IM(I))
-      IF(.NOT.(reg.EQ.0)) GO TO 32751
+      IF(.NOT.(reg.EQ.0)) GO TO 32750
       AAC(I) = MAX(-CON(J+I+4)*agcyc/60.0, -P(I))
-      GO TO 32752
-32751 AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
-32752 Ptmp = Pmax(I)-P(I)
+      GO TO 32751
+32750 AAC(I)    = MIN(CON(J+I+4)*agcyc/60.0, Pmax(I)-P(I))
+32751 Ptmp = Pmax(I)-P(I)
       IF (Ptmp.LT.0)   Ptmp   = 0
       IF (AAC(I).LT.0) AAC(I) = 0
       IF (IM(I).EQ.0)  RETURN
@@ -82,52 +86,52 @@
       Pab                 = Pab+Ptmp
 10    CONTINUE
       VAR(L+36) = Pab
-      IF(.NOT.(MODE.EQ.8)) GO TO 32750
+      IF(.NOT.(MODE.EQ.8)) GO TO 32749
       CON_DSCRPT(1) = 'STATE'
       CON_DSCRPT(2) = 'AGC cycle time'
       CON_DSCRPT(3) = 'NDM'
       RETURN
-32750 IF (MODE.GT.4) GO TO 20
-      IF(.NOT.(MIDTRM)) GO TO 32748
-      IF(.NOT.(INSITR)) GO TO 32746
+32749 IF (MODE.GT.4) GO TO 20
+      IF(.NOT.(MIDTRM)) GO TO 32747
+      IF(.NOT.(INSITR)) GO TO 32745
       IN = VAR(L)
       IF (KPAUSE.EQ.2) IN = (IN+STORMT(2*K-1))*0.50
       Yi = Ki*DELT/2.0*IN+STORE(K)
       Yd = (IN*Kd+STORE(K+1))/(1.0+2.0*Td/DELT)
-      GO TO 32747
-32746 IF(.NOT.(MODE.EQ.1)) GO TO 32745
+      GO TO 32746
+32745 IF(.NOT.(MODE.EQ.1)) GO TO 32744
       IN = VAR(L)
       STORE(K)   = 0.0
       STORE(K+1) = IN*Kd
-      GO TO 32747
-32745 IF(.NOT.(MODE.EQ.2)) GO TO 32744
-      IF(.NOT.(KPAUSE.EQ.1)) GO TO 32742
+      GO TO 32746
+32744 IF(.NOT.(MODE.EQ.2)) GO TO 32743
+      IF(.NOT.(KPAUSE.EQ.1)) GO TO 32741
       STORMT(2*K-1) = VAR(L)
-      GO TO 32743
-32742 IN = VAR(L)
+      GO TO 32742
+32741 IN = VAR(L)
       IF (KPAUSE.EQ.2) IN = (IN+STORMT(2*K-1))*0.50
-32743 Yi         = Ki*DELT/2.0*IN+STORE(K)
+32742 Yi         = Ki*DELT/2.0*IN+STORE(K)
       STORE(K)   = Yi+IN*Ki*DELT/2.0
       Yd         = (IN*Kd+STORE(K+1))/(1.0+2.0*Td/DELT)
       STORE(K+1) = IN*Kd-Yd*(1.0-2.0*Td/DELT)
-32744 CONTINUE
-32747 RETURN
-      GO TO 32749
-32748 IF(.NOT.(MODE.EQ.1)) GO TO 32740
+32743 CONTINUE
+32746 RETURN
+      GO TO 32748
+32747 IF(.NOT.(MODE.EQ.1)) GO TO 32739
       VOUT   = VAR(L+1)
       VINP   = PID_MODE1(Kp,Ki,Kd,Td,VOUT,K,K+1,IEAAC)
-      GO TO 32741
-32740 IF(.NOT.(MODE.EQ.2)) GO TO 32739
+      GO TO 32740
+32739 IF(.NOT.(MODE.EQ.2)) GO TO 32738
       VINP     = VAR(L)
       VOUT     = PID_MODE2(Kp, Ki, Kd, Td, VINP, K, K+1)
-      GO TO 32741
-32739 IF(.NOT.(MODE.EQ.3)) GO TO 32738
+      GO TO 32740
+32738 IF(.NOT.(MODE.EQ.3)) GO TO 32737
       VINP    = VAR(L)
       VOUT    = PID_MODE3(Kp, Ki, Kd, Td, VINP, K, K+1)
       Pregsys = VOUT
       tmp     = 0
       IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.EQ.2) .
-     1AND. (TIME.GT.1))) GO TO 32737
+     1AND. (TIME.GT.1))) GO TO 32736
       AACt    = 0
       Pregsys = 0
       DO 22 I = 1, NDM
@@ -140,72 +144,80 @@
       VAR(L+35)  = Pregsys
       PRINT *,TIME
       PRINT *,'reg not work'
-32737 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
-     1 GO TO 32736
+32736 IF(.NOT.((MOD(INT((TIME)/0.001), agcyc) .LE. 0) .AND. (reg.NE.2)))
+     1 GO TO 32735
       DO 14 I = 1, NDM
       Preg(I) = Pregsys*AAC(I)/AACt
       IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .LT. abs(AACt))))
-     1 GO TO 32735
+     1 GO TO 32734
       mul     = 1
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
-     1O TO 32734
-      IF(.NOT.(R(I).GT.0.0)) GO TO 32733
+     1O TO 32733
+      IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))
+      IF(.NOT.(R(I).GT.0.0)) GO TO 32732
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-32733 tmp = tmp+MIN(Preg(I), AAC(I))
+      GREF(IM(I)) = GREF(IM(I))+MIN(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
+32732 tmp = tmp+MIN(Preg(I), AAC(I))
       PRINT *,"state 1"
-32734 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
-     12732
-      IF(.NOT.(R(I).GT.0.0)) GO TO 32731
+32733 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
+     12731
+      IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+MAX(Preg(I),AAC(I))/MBASE(IM(I)))
+      IF(.NOT.(R(I).GT.0.0)) GO TO 32730
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-32731 tmp = tmp+MAX(Preg(I), AAC(I))
+      GREF(IM(I)) = GREF(IM(I))+MAX(Preg(I), AAC(I))/MBASE(IM(I))*mul*R(I)
+32730 tmp = tmp+MAX(Preg(I), AAC(I))
       PRINT *,"state 2"
-32732 CONTINUE
-32735 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
-     1 GO TO 32730
+32731 CONTINUE
+32734 IF(.NOT.((AGC_status .EQ. 1) .AND. (abs(Pregsys) .GE. abs(AACt))))
+     1 GO TO 32729
       IF(.NOT.(reg.EQ.1 .AND. (PMECH(IM(I))*MBASE(IM(I))).LT.Pmax(I))) G
-     1O TO 32729
-      IF(.NOT.(R(I).GT.0.0)) GO TO 32728
+     1O TO 32728
+      IF (R(I).EQ.0.0) GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))
+      IF(.NOT.(R(I).GT.0.0)) GO TO 32727
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-32728 tmp = tmp+AAC(I)
-32729 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
-     12727
-      IF(.NOT.(R(I).GT.0.0)) GO TO 32726
+      GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
+32727 tmp = tmp+AAC(I)
+32728 IF(.NOT.(reg.EQ.0 .AND. (PMECH(IM(I))*MBASE(IM(I))).GT.0)) GO TO 3
+     12726
+      IF (R(I).EQ.0.0) GREF(IM(I)) = MAX(0.0, GREF(IM(I))+AAC(I)/MBASE(IM(I)))
+      IF(.NOT.(R(I).GT.0.0)) GO TO 32725
       IF (IH(I).GT.0) mul       = VAR(IH(I)+1)*SQRT(VAR(IH(I)+1))/1.2
-32726 tmp = tmp+AAC(I)
+      GREF(IM(I)) = GREF(IM(I))+AAC(I)/MBASE(IM(I))*mul*R(I)
+32725 tmp = tmp+AAC(I)
       PRINT *,"state 4"
-32727 CONTINUE
-32730 IF(.NOT.(TIME.GT.40 .AND. AAC(I).GT.0.1)) GO TO 32725
+32726 CONTINUE
+32729 IF(.NOT.(TIME.GT.40 .AND. AAC(I).GT.0.1)) GO TO 32724
       PRINT '("AAC(", I5, ") = ", F8.2)', I, AAC(I)
-32725 H(I)           = VAR (IH(I)+1)
+32724 H(I)           = VAR (IH(I)+1)
       VAR(L+2+4*I-2) = Preg(I)
       VAR(L+2+4*I-1) = GREF(IM(I))
       VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
       VAR(L+35) = Pregsys
-      IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32724
+      IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32723
       PRINT *,TIME
       PRINT *,'P is not enough'
-32724 IF(.NOT.(abs(Pregsys) .LE. abs(AACt))) GO TO 32723
+32723 IF(.NOT.(abs(Pregsys) .LE. abs(AACt))) GO TO 32722
       PRINT *,TIME
       PRINT *,'P is enough'
-32723 CONTINUE
-32736 RETURN
-      GO TO 32741
-32738 IF(.NOT.(MODE.EQ.4)) GO TO 32722
-      NINTEG = MAX(NINTEG,K+1)
 32722 CONTINUE
-32741 RETURN
-32749 CONTINUE
+32735 RETURN
+      GO TO 32740
+32737 IF(.NOT.(MODE.EQ.4)) GO TO 32721
+      NINTEG = MAX(NINTEG,K+1)
+32721 CONTINUE
+32740 RETURN
+32748 CONTINUE
 20    IF (MODE.EQ.6) GO TO 21
-      IF(.NOT.(MODE.EQ.5)) GO TO 32721
+      IF(.NOT.(MODE.EQ.5)) GO TO 32720
       CALL DOCUHD(*30)
       GO TO 31
-32721 NEW  = .FALSE.
+32720 NEW  = .FALSE.
       DEL2 = 2.*DELT
-      ASSIGN 32719 TO I32720
-      GO TO 32720
-32719 IF(.NOT.(NEW)) RETURN
+      ASSIGN 32718 TO I32719
+      GO TO 32719
+32718 IF(.NOT.(NEW)) RETURN
 31    JJ = J+7
       KK = K+1
       WRITE(IPRT, 100) M, M+2*NDM, J, J+4+NDM, K, K+1, L, L+2+2*NDM
@@ -259,9 +271,9 @@
 118   FORMAT(10(I5, I3))
 119   FORMAT(5(F8.3))
 120   FORMAT(10(F8.3))
-32720 CONTINUE
-      IF(NEW) GO TO 32718
+32719 CONTINUE
+      IF(NEW) GO TO 32717
       NEW  = .TRUE.
       CALL DOCUHD(*30)
-32718 GO TO I32720
+32717 GO TO I32719
       END
