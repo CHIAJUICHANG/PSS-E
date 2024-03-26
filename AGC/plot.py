@@ -78,7 +78,7 @@ print("----------------------------------------")
 print("freqence = " + str(avg_arr[0]))
 
 # plt.savefig('before.png')
-plt.savefig('before1590_110111.png')
+# plt.savefig('before1590_110111.png')
 # # print(chandata[5])
 for i in range(2, 5):
     if i == 3:
@@ -90,13 +90,13 @@ for i in range(2, 5):
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')  
-        plt.savefig('ACE1590_before_110111.png')
+        # plt.savefig('ACE1590_before_110111.png')
     if i == 4:
         plt.plot   (chandata['time'], freq, label='AACt') 
         plt.legend ()
         plt.xlim   ([0,chandata['time'][-1]])
         plt.xlabel ('time')  
-        plt.savefig('AACt1590_before_110111.png') 
+        # plt.savefig('AACt1590_before_110111.png') 
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
@@ -119,7 +119,7 @@ for i in range(2, 5):
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
 for i in range(5, NDM+5):
-    for j in range(0, 4):
+    for j in range(0, 1):
         freq    = [f for f in chandata[4*(i-4)+j+1]]
         plt.figure (4*(i-4)+j+1)
         if j == 0:
@@ -159,7 +159,7 @@ for i in range(5+NDM*4, 5+NDM*4+1):
     plt.legend ()
     plt.xlim   ([0,chandata['time'][-1]])
     plt.xlabel ('time')
-    plt.savefig('Pava_before_110111.png')
+    # plt.savefig('Pava_before_110111.png')
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
