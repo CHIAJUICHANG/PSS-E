@@ -29,8 +29,8 @@
       Pmax(6)     = 24.05
       Pmax(7)     = 24.05
       Pmax(8)     = 24.05
-      Pmax(9)     = 10000.0
-      Pmax(10)    = 10000.0
+      Pmax(9)     = 509.75
+      Pmax(10)    = 450
       DO 1 I = 1, NDM
       IBUS(I)  = ICON(M+1+2*I)
       ID(I)    = ICON(M+2+2*I)+48

@@ -40,9 +40,9 @@ psspy.var_channel([2,1883])
 psspy.var_channel([3,1884]) 
 psspy.var_channel([4,1885])
 NDM   = 10
-bus   = [   704, 831, 832,   861,   862,   863,   864,   865,   110,   111]
-id    = [   "4", "1", "1",   "1",   "1",   "1",   "1",   "1",   "1",   "1"]
-pmax  = [240.77, 105, 105, 24.05, 24.05, 24.05, 24.05, 24.05,   500,   500]
+bus   = [   704, 831, 832,   861,   862,   863,   864,   865,    110,   357]
+id    = [   "4", "1", "1",   "1",   "1",   "1",   "1",   "1",    "1",   "1"]
+pmax  = [240.77, 105, 105, 24.05, 24.05, 24.05, 24.05, 24.05, 509.75,   450]
 for i in range(0, NDM*4+2):
     psspy.var_channel([5+i,1886+i])     # L+3 
 
@@ -166,6 +166,8 @@ for i in range(5+NDM*4, 5+NDM*4+2):
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
+for k in range(0, len(Ptotal)):
+    Ptotal[k] -= Ptotal[0]
 plt.figure (5+NDM*4+3)
 plt.plot   (chandata['time'], Ptotal, label='Ptotal')
 plt.legend ()
