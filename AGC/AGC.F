@@ -194,7 +194,7 @@
       VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
-      VAR(L+35) = Pregsys
+      VAR(L+2+4*NDM+1) = Pregsys
       IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32723
       PRINT *,TIME
       PRINT *,'P is not enough'
