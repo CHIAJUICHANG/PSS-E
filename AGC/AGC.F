@@ -29,6 +29,8 @@
       Pmax(6)     = 24.05
       Pmax(7)     = 24.05
       Pmax(8)     = 24.05
+      Pmax(9)     = 500.0
+      Pmax(10)    = 500.0
       DO 1 I = 1, NDM
       IBUS(I)  = ICON(M+1+2*I)
       ID(I)    = ICON(M+2+2*I)+48
@@ -85,7 +87,7 @@
       AACt                = AACt+AAC(I)
       Pab                 = Pab+Ptmp
 10    CONTINUE
-      VAR(L+36) = Pab
+      VAR(L+2+4*NDM+1) = Pab
       IF(.NOT.(MODE.EQ.8)) GO TO 32749
       CON_DSCRPT(1) = 'STATE'
       CON_DSCRPT(2) = 'AGC cycle time'
@@ -194,7 +196,7 @@
       VAR(L+2+4*I)   = AAC (I)
 14    CONTINUE
       VAR(L+2)  = AACt
-      VAR(L+2+4*NDM+1) = Pregsys
+      VAR(L+2+4*NDM+2) = Pregsys
       IF(.NOT.(abs(Pregsys) .GT. abs(AACt))) GO TO 32723
       PRINT *,TIME
       PRINT *,'P is not enough'
