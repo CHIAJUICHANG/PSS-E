@@ -49,7 +49,7 @@ for i in range(0, NDM*4+2):
 # ----------------------run dyrnamic simulation-------------------------
 psspy.strt(0,outfile)
 psspy.run (0,  1, 1000, 1000, 0)
-# psspy.dist_machine_trip(107, r"1")  # 423
+psspy.dist_machine_trip(107, r"1")  # 423
 # psspy.dist_machine_trip(108, r"1")  # 423
 # psspy.dist_machine_trip(109, r"1")  # 423
 # psspy.dist_machine_trip(321, r"1")  # 270
@@ -121,8 +121,8 @@ for i in range(2, 5):
 for i in range(5, NDM+5):
     for j in range(0, 4):
         freq    = [f for f in chandata[4*(i-4)+j+1]]
+        plt.figure (4*(i-4)+j+1)
         if j == 0:
-            plt.figure (4*(i-4)+j+1)
             plt.plot   (chandata['time'], freq, label='P(I)')
             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
             plt.plot   (chandata['time'], pmaxx, label='Pmax')
