@@ -118,6 +118,7 @@ for i in range(2, 5):
 #     plt.legend ()
 #     plt.xlim   ([0,chandata['time'][-1]])
 #     plt.xlabel ('time')
+Ptotal = [0]*len(freq)
 for i in range(5, NDM+5):
     for j in range(0, 1):
         freq    = [f for f in chandata[4*(i-4)+j+1]]
@@ -127,6 +128,8 @@ for i in range(5, NDM+5):
             pmaxx      = [pmax[i-5] for k in range(0, len(chandata['time']))]
             plt.plot   (chandata['time'], pmaxx, label='Pmax')
             print('P('+str(i-4)+')'+str(freq[len(freq)-1]))
+            for k in range(0, len(freq)):
+                Ptotal[k]     += freq[k]
         if j == 1:    
             plt.plot   (chandata['time'], freq, label='Preg(I)')
         if j == 2:
@@ -152,7 +155,7 @@ for i in range(5, NDM+5):
     #     plt.legend ()
     #     plt.xlim   ([0,chandata['time'][-1]])
     #     plt.xlabel ('time')
-for i in range(5+NDM*4, 5+NDM*4+1):
+for i in range(5+NDM*4, 5+NDM*4+2):
     freq    = [f for f in chandata[i]]
     plt.figure (i)
     plt.plot   (chandata['time'], freq, label='P available')
@@ -163,4 +166,9 @@ for i in range(5+NDM*4, 5+NDM*4+1):
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
+plt.figure (5+NDM*4+3)
+plt.plot   (chandata['time'], Ptotal, label='Ptotal')
+plt.legend ()
+plt.xlim   ([0,chandata['time'][-1]])
+plt.xlabel ('time')  
 plt.show   ()
