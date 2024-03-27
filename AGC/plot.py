@@ -166,8 +166,11 @@ for i in range(5+NDM*4, 5+NDM*4+2):
     # plt.savefig('ACE1590.png')
     # if i == 5:
     #     plt.savefig('reg.png')
-for k in range(0, len(Ptotal)):
+    if i == 5+NDM*4:
+        print("P available = " + str(freq[len(freq)-1]))
+for k in range(1, len(Ptotal)):
     Ptotal[k] -= Ptotal[0]
+Ptotal[0] = 0
 plt.figure (5+NDM*4+3)
 plt.plot   (chandata['time'], Ptotal, label='Ptotal')
 plt.legend ()
