@@ -40,8 +40,7 @@ $INSERT COMON4.INS
       Pab         = 0
       reg         = 2                     ! 2 nothing 1 regulation up 0 down
       df          = 0.0
-C     Pmax(1)     = 240.5
-      Pmax(1)     = 1000.0
+      Pmax(1)     = 240.5
       Pmax(2)     = 105.0
       Pmax(3)     = 105.0
       Pmax(4)     = 24.05
@@ -49,8 +48,8 @@ C     Pmax(1)     = 240.5
       Pmax(6)     = 24.05
       Pmax(7)     = 24.05
       Pmax(8)     = 24.05
-      Pmax(9)     = 1000.0
-      Pmax(10)    = 1000.0  
+      Pmax(9)     = 2000.0
+      Pmax(10)    = 2000.0  
 C     Pmax(9)     = 509.75
 C     Pmax(10)    = 450
 
